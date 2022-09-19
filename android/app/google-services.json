@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "286082938001",
+    "project_id": "education-app-829f1",
+    "storage_bucket": "education-app-829f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286082938001:android:733728c5e254a120147b30",
+        "android_client_info": {
+          "package_name": "com.gbroz.educationapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286082938001-jsvd3avsp89o6cijvetjpgcsljno4q8i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpUCF3RBAzTiGHThgKUoXtYuu7c6BZC7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286082938001-jsvd3avsp89o6cijvetjpgcsljno4q8i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
