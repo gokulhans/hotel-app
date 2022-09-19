@@ -6,10 +6,10 @@ void main() async {
  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
-      apiKey: "AIzaSyAcc96bc47hzeOUVu5smhQXNAELAA7wFFg",
-      appId: "fir-app-9c681",
-      messagingSenderId: "661342886164",
-      projectId: "fir-app-9c681",
+      apiKey: "AIzaSyDpUCF3RBAzTiGHThgKUoXtYuu7c6BZC7Q",
+      appId: "education-app-829f1",
+      messagingSenderId: "286082938001",
+      projectId: "education-app-829f1",
     ),
   );
   runApp(const MyApp());
@@ -55,7 +55,7 @@ class MyHomePage extends StatelessWidget {
       ),
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget
-        stream: db.collection('todos').snapshots(),
+        stream: db.collection('eduapp').snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -67,7 +67,7 @@ class MyHomePage extends StatelessWidget {
             itemBuilder: (context, int index) {
               DocumentSnapshot documentSnapshot = snapshot.data.docs[index];
               return ListTile(
-                title: Text(documentSnapshot['todo']),
+                title: Text(documentSnapshot['name']),
                 onTap: () {
                   // Here We Will Add The Update Feature and passed the value 'true' to the is update
                   // feature.
@@ -84,7 +84,7 @@ class MyHomePage extends StatelessWidget {
                   ),
                   onPressed: () {
                     // Here We Will Add The Delete Feature
-                    db.collection('todos').doc(documentSnapshot.id).delete();
+                    db.collection('eduapp').doc(documentSnapshot.id).delete();
                   },
                 ),
               );
@@ -127,11 +127,11 @@ showBottomSheet(
             onPressed: () {
               // Check to see if isUpdate is true then update the value else add the value
               if (isUpdate) {
-                db.collection('todos').doc(documentSnapshot?.id).update({
+                db.collection('eduapp').doc(documentSnapshot?.id).update({
                   'todo': value,
                 });
               } else {
-                db.collection('todos').add({'todo': value});
+                db.collection('eduapp').add({'todo': value});
               }
               Navigator.pop(context);
             },
