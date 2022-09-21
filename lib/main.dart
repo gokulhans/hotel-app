@@ -1,6 +1,8 @@
 import 'package:educationapp/admin.dart';
 import 'package:educationapp/demo.dart';
+import 'package:educationapp/menu.dart';
 import 'package:educationapp/menucard.dart';
+import 'package:educationapp/orders.dart';
 import 'package:educationapp/sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,7 +39,11 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         'admin': (ctx) {
-          return AdminPage();
+          return const AdminPage();
+        }, 'orders': (ctx) {
+          return const Orders();
+        }, 'menu': (ctx) {
+          return const Menu();
         },},
       home: const Scaffold(body: MainPage()),
     );
@@ -54,7 +60,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
   final screens = [
-    const Home(),
+    const Menu(),
     const Courses(),
     const Syllabus(),
     const AdminPage()
@@ -91,11 +97,35 @@ class _MainPageState extends State<MainPage> {
               // AdmobHelper.showInterad();
               Navigator.of(context).pushNamed('admin');
             },
-          )
+          ),
+          IconButton(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            icon: const Icon(
+              Icons.food_bank,
+              color: Colors.teal,
+            ),
+            onPressed: () {
+              // AdmobHelper.createInterad();
+              // AdmobHelper.showInterad();
+              Navigator.of(context).pushNamed('orders');
+            },
+          ),
+          IconButton(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            icon: const Icon(
+              Icons.menu_book,
+              color: Colors.teal,
+            ),
+            onPressed: () {
+              // AdmobHelper.createInterad();
+              // AdmobHelper.showInterad();
+              Navigator.of(context).pushNamed('menu');
+            },
+          ),
         ],
         iconTheme: const IconThemeData(color: Colors.green),
       ),
-      body: const SingleChildScrollView(child: MenuCard()),
+      body: const SingleChildScrollView(child: Menu()),
       bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.white,
           currentIndex: currentIndex,

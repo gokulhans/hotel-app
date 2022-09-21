@@ -6,10 +6,11 @@ final db = FirebaseFirestore.instance;
 String? value;
 String? image;
 String? des;
+String? count;
 
 
-class AdminPage extends StatelessWidget {
-  const AdminPage({Key? key}) : super(key: key);
+class Orders extends StatelessWidget {
+  const Orders({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,12 +27,12 @@ class AdminPage extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: const Text('ADMIN PANEL'),
+        title: const Text('Orders'),
         centerTitle: true,
       ),
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget
-        stream: db.collection('eduapp').snapshots(),
+        stream: db.collection('orders').snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -67,6 +68,10 @@ class AdminPage extends StatelessWidget {
           ButtonBar(
             alignment: MainAxisAlignment.start,
             children: [
+              Text(
+              documentSnapshot['count'],
+              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+            ),
               // IconButton(
               //     icon: const Icon(
               //       Icons.delete_outline,
@@ -80,10 +85,10 @@ class AdminPage extends StatelessWidget {
                 // textColor: const Color(0xFF6200EE),
                 onPressed: () {
                   // Perform some action
-                    db.collection('eduapp').doc(documentSnapshot.id).delete();
+                    db.collection('orders').doc(documentSnapshot.id).delete();
 
                 },
-                child: const Text('Delete'),
+                child: const Text('Remove'),
               ),
               TextButton(
                 // style: TextButton.styleFrom(for),
@@ -96,7 +101,7 @@ class AdminPage extends StatelessWidget {
                     },
                   );
                 },
-                child: const Text('Edit'),
+                child: const Text('Edit Count'),
               ),
             ],
           ),
@@ -127,44 +132,18 @@ showBottomSheet(
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.9,
           child: Column(
-            children: [
+            children: [ 
               TextField(
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   // Used a ternary operator to check if isUpdate is true then display
                   // Update name.
-                  labelText: isUpdate ? 'Update name' : 'Add name',
-                  hintText: 'Enter An Item',
+                  labelText: isUpdate ? 'Update Count' : 'Add Description',
+                  hintText: 'Enter count',
                 ),
                 onChanged: (String _val) {
                   // Storing the value of the text entered in the variable value.
-                  value = _val;
-                },
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  // Used a ternary operator to check if isUpdate is true then display
-                  // Update name.
-                  labelText: isUpdate ? 'Update image' : 'Add image',
-                  hintText: 'Enter An image link',
-                ),
-                onChanged: (String _val) {
-                  // Storing the value of the text entered in the variable value.
-                  image = _val;
-                },
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  // Used a ternary operator to check if isUpdate is true then display
-                  // Update name.
-                  labelText: isUpdate ? 'Update Description' : 'Add Description',
-                  hintText: 'Enter Description',
-                ),
-                onChanged: (String _val) {
-                  // Storing the value of the text entered in the variable value.
-                  des = _val;
+                  count = _val;
                 },
               ),
             ],
@@ -178,8 +157,8 @@ showBottomSheet(
             onPressed: () {
               // Check to see if isUpdate is true then update the value else add the value
               if (isUpdate) {
-                db.collection('eduapp').doc(documentSnapshot?.id).update({
-                  'name': value,'image': image,'des': des
+                db.collection('orders').doc(documentSnapshot?.id).update({
+                  'count': count
                   });
               } else {
                 db.collection('eduapp').add({'name': value,'image': image,'des': des});
