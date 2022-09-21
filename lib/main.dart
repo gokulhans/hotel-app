@@ -1,9 +1,11 @@
 import 'package:educationapp/admin.dart';
+import 'package:educationapp/alltables.dart';
 import 'package:educationapp/demo.dart';
 import 'package:educationapp/menu.dart';
 import 'package:educationapp/menucard.dart';
 import 'package:educationapp/orders.dart';
 import 'package:educationapp/sidebar.dart';
+import 'package:educationapp/table.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -44,6 +46,11 @@ class MyApp extends StatelessWidget {
           return const Orders();
         }, 'menu': (ctx) {
           return const Menu();
+        },
+       'alltables': (ctx) {
+          return const AllTables();
+        },'table': (ctx) {
+          return  Tablepage(title: 'df',);
         },},
       home: const Scaffold(body: MainPage()),
     );
@@ -120,6 +127,18 @@ class _MainPageState extends State<MainPage> {
               // AdmobHelper.createInterad();
               // AdmobHelper.showInterad();
               Navigator.of(context).pushNamed('menu');
+            },
+          ),
+          IconButton(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            icon: const Icon(
+              Icons.table_bar,
+              color: Colors.teal,
+            ),
+            onPressed: () {
+              // AdmobHelper.createInterad();
+              // AdmobHelper.showInterad();
+              Navigator.of(context).pushNamed('alltables');
             },
           ),
         ],

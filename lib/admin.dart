@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 final db = FirebaseFirestore.instance;
 String? value;
 String? image;
 String? des;
-
 
 class AdminPage extends StatelessWidget {
   const AdminPage({Key? key}) : super(key: key);
@@ -46,68 +44,101 @@ class AdminPage extends StatelessWidget {
                 title: Column(
                   children: [
                     Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        children: [
-          ListTile(
-            // leading: const Icon(Icons.arrow_drop_down_circle),
-            title:  Text(documentSnapshot['name']),
-            // subtitle: Text(
-            //   'Secondary Text',
-            //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
-            // ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              documentSnapshot['des'],
-              style: TextStyle(color: Colors.black.withOpacity(0.6)),
-            ),
-          ),
-          ButtonBar(
-            alignment: MainAxisAlignment.start,
-            children: [
-              // IconButton(
-              //     icon: const Icon(
-              //       Icons.delete_outline,
-              //     ),
-              //     onPressed: () {
-              //       // Here We Will Add The Delete Feature
-              //       db.collection('eduapp').doc(documentSnapshot.id).delete();
-              //     },
-              //   ),
-              TextButton(
-                // textColor: const Color(0xFF6200EE),
-                onPressed: () {
-                  // Perform some action
-                    db.collection('eduapp').doc(documentSnapshot.id).delete();
-
-                },
-                child: const Text('Delete'),
-              ),
-              TextButton(
-                // style: TextButton.styleFrom(for),
-                onPressed: () {
-                  // Perform some action
-                   showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return showBottomSheet(context, true, documentSnapshot);
-                    },
-                  );
-                },
-                child: const Text('Edit'),
-              ),
-            ],
-          ),
-          Image.network(documentSnapshot['image']),
-          // https://picsum.photos/250?image=9
-        ],
-      ),
-    )
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        children: [
+                          ListTile(
+                            // leading: const Icon(Icons.arrow_drop_down_circle),
+                            title: Card(
+                              clipBehavior: Clip.antiAlias,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  ListTile(
+                                    // leading: Icon(Icons.arrow_drop_down_circle),
+                                    title: Center(
+                                      child: Text(
+                                        documentSnapshot['name'],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
+                                    // subtitle: Text(
+                                    //   'Secondary Text',
+                                    //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                    // ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      height: 200,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                            documentSnapshot['image']),
+                                      )),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      documentSnapshot['des'],
+                                      style: TextStyle(
+                                          color: Colors.black.withOpacity(0.6)),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 2),
+                                    child: ButtonBar(
+                                      alignment: MainAxisAlignment.start,
+                                      children: [
+                                        ElevatedButton.icon(
+                                          icon: const Icon(Icons.delete_rounded,
+                                              size: 18),
+                                          label: const Text("Delete"),
+                                          onPressed: () {
+                                            // Perform some action
+                                            db
+                                                .collection('eduapp')
+                                                .doc(documentSnapshot.id)
+                                                .delete();
+                                          },
+                                        ),
+                                        ElevatedButton.icon(
+                                          icon:
+                                              const Icon(Icons.edit, size: 16),
+                                          label: const Text("Edit"),
+                                          onPressed: () {
+                                            // Perform some action
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return showBottomSheet(context,
+                                                    true, documentSnapshot);
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // subtitle: Text(
+                            //   'Secondary Text',
+                            //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                            // ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
-              
               );
             },
           );
@@ -159,7 +190,8 @@ showBottomSheet(
                   border: const OutlineInputBorder(),
                   // Used a ternary operator to check if isUpdate is true then display
                   // Update name.
-                  labelText: isUpdate ? 'Update Description' : 'Add Description',
+                  labelText:
+                      isUpdate ? 'Update Description' : 'Add Description',
                   hintText: 'Enter Description',
                 ),
                 onChanged: (String _val) {
@@ -178,11 +210,14 @@ showBottomSheet(
             onPressed: () {
               // Check to see if isUpdate is true then update the value else add the value
               if (isUpdate) {
-                db.collection('eduapp').doc(documentSnapshot?.id).update({
-                  'name': value,'image': image,'des': des
-                  });
+                db
+                    .collection('eduapp')
+                    .doc(documentSnapshot?.id)
+                    .update({'name': value, 'image': image, 'des': des});
               } else {
-                db.collection('eduapp').add({'name': value,'image': image,'des': des});
+                db
+                    .collection('eduapp')
+                    .add({'name': value, 'image': image, 'des': des});
               }
               Navigator.pop(context);
             },

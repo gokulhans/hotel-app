@@ -6,12 +6,30 @@ String? value;
 String? image;
 String? des;
 String? count;
+bool? order = false;
+String? table;
 
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+        title: const Text('MENU'),
+        centerTitle: true,
+      ),
+      bottomNavigationBar: FloatingActionButton(
+        onPressed: () {
+          // When the User clicks on the button, display a BottomSheet
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return addNewOrder(context);
+            },
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget
         stream: db.collection('eduapp').snapshots(),
@@ -34,41 +52,78 @@ class Menu extends StatelessWidget {
                         children: [
                           ListTile(
                             // leading: const Icon(Icons.arrow_drop_down_circle),
-                            title: Text(documentSnapshot['name']),
+                            title: Card(
+                              clipBehavior: Clip.antiAlias,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  ListTile(
+                                    // leading: Icon(Icons.arrow_drop_down_circle),
+                                    title: Center(
+                                      child: Text(
+                                        documentSnapshot['name'],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
+                                    // subtitle: Text(
+                                    //   'Secondary Text',
+                                    //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                    // ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      height: 200,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                            documentSnapshot['image']),
+                                      )),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      documentSnapshot['des'],
+                                      style: TextStyle(
+                                          color: Colors.black.withOpacity(0.6)),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 2),
+                                    child: ButtonBar(
+                                      alignment: MainAxisAlignment.start,
+                                      children: [
+                                        ElevatedButton.icon(
+                                            icon: const Icon(
+                                                Icons.delete_rounded,
+                                                size: 18),
+                                            label: const Text("Order"),
+                                            onPressed: () {
+                                              showModalBottomSheet(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return addOrder(context,
+                                                        documentSnapshot);
+                                                  });
+                                            })
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                             // subtitle: Text(
                             //   'Secondary Text',
                             //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             // ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              documentSnapshot['des'],
-                              style: TextStyle(
-                                  color: Colors.black.withOpacity(0.6)),
-                            ),
-                          ),
-                          ButtonBar(
-                            alignment: MainAxisAlignment.start,
-                            children: [
-                              TextButton(
-                                // style: TextButton.styleFrom(for),
-                                onPressed: () {
-                                  // Perform some action
-                                  showModalBottomSheet(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return addOrder(
-                                          context, documentSnapshot);
-                                    },
-                                  );
-                                },
-                                child: const Text('Order'),
-                              ),
-                            ],
-                          ),
-                          Image.network(documentSnapshot['image']),
-                          // https://picsum.photos/250?image=9
                         ],
                       ),
                     )
@@ -115,19 +170,62 @@ addOrder(BuildContext context, DocumentSnapshot? documentSnapshot) {
                   MaterialStateProperty.all(Colors.lightBlueAccent),
             ),
             onPressed: () {
-
               db.collection('orders').add({
-                'id': documentSnapshot?.id,
                 'image': documentSnapshot?['image'],
                 'des': documentSnapshot?['des'],
                 'name': documentSnapshot?['name'],
-                'count': count
+                'count': count,
+                'table': table
               });
 
               Navigator.pop(context);
             },
             child: const Text(
               'Add',
+              style: TextStyle(color: Colors.white),
+            )),
+      ],
+    ),
+  );
+}
+
+addNewOrder(BuildContext context) {
+  // Added the isUpdate argument to check if our item has been updated
+  return Padding(
+    padding: const EdgeInsets.only(top: 20),
+    child: Column(
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Column(
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: 'User table',
+                  hintText: 'Enter table',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  table = _val;
+                },
+              ),
+            ],
+          ),
+        ),
+        TextButton(
+            style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all(Colors.lightBlueAccent),
+            ),
+            onPressed: () {
+              db.collection('tables').add({'table': table});
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'Ok',
               style: TextStyle(color: Colors.white),
             )),
       ],
