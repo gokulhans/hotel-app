@@ -1,6 +1,11 @@
+import 'package:educationapp/admin.dart';
+import 'package:educationapp/demo.dart';
+import 'package:educationapp/menucard.dart';
+import 'package:educationapp/sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,57 +22,6 @@ void main() async {
   );
 }
 
-class Testapp extends StatelessWidget {
-  const Testapp({ Key? key }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-          clipBehavior: Clip.antiAlias,
-          child: Column(
-            children: [
-              ListTile(
-                leading: Icon(Icons.arrow_drop_down_circle),
-                title: const Text('Card title 1'),
-                subtitle: Text(
-                  'Secondary Text',
-                  style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
-                  style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                ),
-              ),
-              ButtonBar(
-                alignment: MainAxisAlignment.start,
-                children: [
-                  FlatButton(
-                    textColor: const Color(0xFF6200EE),
-                    onPressed: () {
-                      // Perform some action
-                    },
-                    child: const Text('ACTION 1'),
-                  ),
-                  FlatButton(
-                    textColor: const Color(0xFF6200EE),
-                    onPressed: () {
-                      // Perform some action
-                    },
-                    child: const Text('ACTION 2'),
-                  ),
-                ],
-              ),
-              // Image.asset('assets/card-sample-image.jpg'),
-              // Image.asset('assets/card-sample-image-2.jpg'),
-            ],
-          ),
-        );
-  }
-}
-
 final db = FirebaseFirestore.instance;
 String? value;
 
@@ -81,121 +35,109 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(body: const Testapp()),
+      routes: {
+        'admin': (ctx) {
+          return AdminPage();
+        },},
+      home: const Scaffold(body: MainPage()),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  int currentIndex = 0;
+  final screens = [
+    const Home(),
+    const Courses(),
+    const Syllabus(),
+    const AdminPage()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: FloatingActionButton(
-        onPressed: () {
-          // When the User clicks on the button, display a BottomSheet
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return showBottomSheet(context, false, null);
-            },
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
+      drawer: const NavDrawer(),
       appBar: AppBar(
-        title: const Text('name App'),
-        centerTitle: true,
-      ),
-      body: StreamBuilder(
-        // Reading Items form our Database Using the StreamBuilder widget
-        stream: db.collection('eduapp').snapshots(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ListView.builder(
-            itemCount: snapshot.data?.docs.length,
-            itemBuilder: (context, int index) {
-              DocumentSnapshot documentSnapshot = snapshot.data.docs[index];
-              return ListTile(
-                title: Text(documentSnapshot['name']),
-                onTap: () {
-                  // Here We Will Add The Update Feature and passed the value 'true' to the is update
-                  // feature.
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return showBottomSheet(context, true, documentSnapshot);
-                    },
-                  );
-                },
-                trailing: IconButton(
-                  icon: const Icon(
-                    Icons.delete_outline,
-                  ),
-                  onPressed: () {
-                    // Here We Will Add The Delete Feature
-                    db.collection('eduapp').doc(documentSnapshot.id).delete();
-                  },
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-showBottomSheet(
-    BuildContext context, bool isUpdate, DocumentSnapshot? documentSnapshot) {
-  // Added the isUpdate argument to check if our item has been updated
-  return Padding(
-    padding: const EdgeInsets.only(top: 20),
-    child: Column(
-      children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.9,
-          child: TextField(
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              // Used a ternary operator to check if isUpdate is true then display
-              // Update name.
-              labelText: isUpdate ? 'Update name' : 'Add name',
-              hintText: 'Enter An Item',
-            ),
-            onChanged: (String _val) {
-              // Storing the value of the text entered in the variable value.
-              value = _val;
-            },
-          ),
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          // Status bar color
+          statusBarColor: Colors.white,
+          // Status bar brightness (optional)
+          statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
         ),
-        TextButton(
-            style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(Colors.lightBlueAccent),
+        backgroundColor: Colors.white,
+        bottomOpacity: 0.0,
+        elevation: 0.0,
+        centerTitle: true,
+        title: const Text(
+          "Hotel Disoosa",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.w800),
+        ),
+        actions: [
+          IconButton(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            icon: const Icon(
+              Icons.admin_panel_settings,
+              color: Colors.teal,
             ),
             onPressed: () {
-              // Check to see if isUpdate is true then update the value else add the value
-              if (isUpdate) {
-                db.collection('eduapp').doc(documentSnapshot?.id).update({
-                  'name': value,
-                });
-              } else {
-                db.collection('eduapp').add({'name': value});
-              }
-              Navigator.pop(context);
+              // AdmobHelper.createInterad();
+              // AdmobHelper.showInterad();
+              Navigator.of(context).pushNamed('admin');
             },
-            child: isUpdate
-                ? const Text(
-                    'UPDATE',
-                    style: TextStyle(color: Colors.white),
-                  )
-                : const Text('ADD', style: TextStyle(color: Colors.white))),
-      ],
-    ),
-  );
+          )
+        ],
+        iconTheme: const IconThemeData(color: Colors.green),
+      ),
+      body: const SingleChildScrollView(child: MenuCard()),
+      bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          currentIndex: currentIndex,
+          onTap: (index) => setState(() => currentIndex = index),
+          unselectedLabelStyle: const TextStyle(
+            color: Colors.grey,
+          ),
+          selectedIconTheme: const IconThemeData(
+            color: Colors.green,
+          ),
+          selectedLabelStyle: const TextStyle(
+            color: Colors.green,
+          ),
+          unselectedIconTheme: const IconThemeData(
+            color: Colors.grey,
+          ),
+          showSelectedLabels: true,
+          type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Courses'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.graphic_eq_outlined), label: 'Syllabus'),
+            BottomNavigationBarItem(
+
+              icon: Icon(
+                Icons.notifications,
+                // color: Colors.red,
+              ),
+              
+              label: 'Notis',
+            ),
+          ]),
+    );
+  }
+
+  // Future<void> saveNote() async {
+  //   final test = NoteDB().test();
+  //   print(test);
+  //   return test;
+  // }
 }
