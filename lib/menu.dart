@@ -7,17 +7,14 @@ String? image;
 String? des;
 String? count;
 bool? order = false;
-String? table;
+String? table = 'undefined';
 
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-        title: const Text('MENU'),
-        centerTitle: true,
-      ),
+      
       bottomNavigationBar: FloatingActionButton(
         onPressed: () {
           // When the User clicks on the button, display a BottomSheet

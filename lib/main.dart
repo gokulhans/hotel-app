@@ -65,13 +65,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int currentIndex = 0;
-  final screens = [
-    const Menu(),
-    const Courses(),
-    const Syllabus(),
-    const AdminPage()
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,94 +87,60 @@ class _MainPageState extends State<MainPage> {
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.w800),
         ),
         actions: [
-          IconButton(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            icon: const Icon(
-              Icons.admin_panel_settings,
-              color: Colors.teal,
-            ),
-            onPressed: () {
-              // AdmobHelper.createInterad();
-              // AdmobHelper.showInterad();
-              Navigator.of(context).pushNamed('admin');
-            },
-          ),
-          IconButton(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            icon: const Icon(
-              Icons.food_bank,
-              color: Colors.teal,
-            ),
-            onPressed: () {
-              // AdmobHelper.createInterad();
-              // AdmobHelper.showInterad();
-              Navigator.of(context).pushNamed('orders');
-            },
-          ),
-          IconButton(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            icon: const Icon(
-              Icons.menu_book,
-              color: Colors.teal,
-            ),
-            onPressed: () {
-              // AdmobHelper.createInterad();
-              // AdmobHelper.showInterad();
-              Navigator.of(context).pushNamed('menu');
-            },
-          ),
-          IconButton(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            icon: const Icon(
-              Icons.table_bar,
-              color: Colors.teal,
-            ),
-            onPressed: () {
-              // AdmobHelper.createInterad();
-              // AdmobHelper.showInterad();
-              Navigator.of(context).pushNamed('alltables');
-            },
-          ),
+          // IconButton(
+          //   padding: const EdgeInsets.symmetric(horizontal: 24),
+          //   icon: const Icon(
+          //     Icons.admin_panel_settings,
+          //     color: Colors.teal,
+          //   ),
+          //   onPressed: () {
+          //     // AdmobHelper.createInterad();
+          //     // AdmobHelper.showInterad();
+          //     Navigator.of(context).pushNamed('admin');
+          //   },
+          // ),
+          // IconButton(
+          //   padding: const EdgeInsets.symmetric(horizontal: 24),
+          //   icon: const Icon(
+          //     Icons.food_bank,
+          //     color: Colors.teal,
+          //   ),
+          //   onPressed: () {
+          //     // AdmobHelper.createInterad();
+          //     // AdmobHelper.showInterad();
+          //     Navigator.of(context).pushNamed('orders');
+          //   },
+          // ),
+          // IconButton(
+          //   padding: const EdgeInsets.symmetric(horizontal: 24),
+          //   icon: const Icon(
+          //     Icons.menu_book,
+          //     color: Colors.teal,
+          //   ),
+          //   onPressed: () {
+          //     // AdmobHelper.createInterad();
+          //     // AdmobHelper.showInterad();
+          //     Navigator.of(context).pushNamed('menu');
+          //   },
+          // ),
+          // IconButton(
+          //   padding: const EdgeInsets.symmetric(horizontal: 24),
+          //   icon: const Icon(
+          //     Icons.table_bar,
+          //     color: Colors.teal,
+          //   ),
+          //   onPressed: () {
+          //     // AdmobHelper.createInterad();
+          //     // AdmobHelper.showInterad();
+          //     Navigator.of(context).pushNamed('alltables');
+          //   },
+          // ),
         ],
         iconTheme: const IconThemeData(color: Colors.green),
       ),
-      body: const SingleChildScrollView(child: Menu()),
-      bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white,
-          currentIndex: currentIndex,
-          onTap: (index) => setState(() => currentIndex = index),
-          unselectedLabelStyle: const TextStyle(
-            color: Colors.grey,
-          ),
-          selectedIconTheme: const IconThemeData(
-            color: Colors.green,
-          ),
-          selectedLabelStyle: const TextStyle(
-            color: Colors.green,
-          ),
-          unselectedIconTheme: const IconThemeData(
-            color: Colors.grey,
-          ),
-          showSelectedLabels: true,
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Courses'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.graphic_eq_outlined), label: 'Syllabus'),
-            BottomNavigationBarItem(
-
-              icon: Icon(
-                Icons.notifications,
-                // color: Colors.red,
-              ),
-              
-              label: 'Notis',
-            ),
-          ]),
+      // body: const SingleChildScrollView(child: Menu()),  
+      body: Menu(), 
+       
     );
   }
 

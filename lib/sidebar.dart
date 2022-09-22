@@ -20,61 +20,22 @@ class NavDrawer extends StatelessWidget {
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage('assets/logo.png'),
+                  image:NetworkImage("https://cdn.pixabay.com/photo/2010/12/13/10/25/canape-2802_960_720.jpg"),
                 )),
               ),
             ),
           ),
+       
+         
           ListTile(
-            leading: const Icon(Icons.input),
-            title: const Text('Welcome'),
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.telegram),
-            title: const Text('Telegram'),
-            onTap: () async {
-              var url = "https://t.me/studygramcu";
-              if (await canLaunchUrl(Uri.parse(url))) {
-                await launchUrl(Uri.parse(url),
-                    mode: LaunchMode.externalNonBrowserApplication);
-              } else {
-                throw 'Could not launch $url';
-              }
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.whatsapp),
-            title: const Text('Whatsapp'),
-            onTap: () async {
-              var url = "https://wa.me/message/5XWWJKY6UH5EG1";
-              if (await canLaunchUrl(Uri.parse(url))) {
-                await launchUrl(Uri.parse(url),
-                    mode: LaunchMode.externalNonBrowserApplication);
-              } else {
-                throw 'Could not launch $url';
-              }
-            },
-          ),
-          ListTile(
-            leading: const Icon(FontAwesomeIcons.instagram),
-            title: const Text('Instagram'),
-            onTap: () async {
-              var url = "https://instagram.com/studygramcu?igshid=YmMyMTA2M2Y=";
-              if (await canLaunchUrl(Uri.parse(url))) {
-                await launchUrl(Uri.parse(url),
-                    mode: LaunchMode.externalNonBrowserApplication);
-              } else {
-                throw 'Could not launch $url';
-              }
-            },
+            leading: const Icon(Icons.copyright_sharp),
+            title: const Text('Menu'),
+            onTap: () => {Navigator.of(context).pushNamed('menu')},
           ),
           ListTile(
             leading: const Icon(Icons.copyright_sharp),
-            title: const Text('Copyright'),
-            onTap: () => {Navigator.of(context).pushNamed('copyright')},
+            title: const Text('Orders'),
+            onTap: () => {Navigator.of(context).pushNamed('orders')},
           ),
           // ListTile(
           //   leading: Icon(Icons.favorite,color: Colors.red,),
@@ -83,20 +44,15 @@ class NavDrawer extends StatelessWidget {
           // ),
           ListTile(
             leading: const Icon(Icons.info),
-            title: const Text('About Us'),
-            onTap: () => {Navigator.of(context).pushNamed('about')},
+            title: const Text('All Tables'),
+            onTap: () => {Navigator.of(context).pushNamed('alltables')},
           ),
           ListTile(
-            leading: const Icon(Icons.share),
-            title: const Text('Share App'),
-            onTap: () async {
-              const message =
-                  "Studygram is a place for calicut university students. Previous Year Question Papers ,Studymaterials,Video Classes are Available";
-              const appurl =
-                  "https://play.google.com/store/apps/details?id=com.gbroz.studygram";
-              await Share.share("$message \n $appurl");
-            },
+            leading: const Icon(Icons.info),
+            title: const Text('Admin Page'),
+            onTap: () => {Navigator.of(context).pushNamed('admin')},
           ),
+         
         ],
       ),
     );
