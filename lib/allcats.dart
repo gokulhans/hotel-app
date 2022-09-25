@@ -44,12 +44,11 @@ class _AllCatsState extends State<AllCats> {
               onPressed: () {
                 // Perform some action
                 Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Menucard(
-                                      title: search),
-                                ),
-                              )
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Menucard(title: search),
+                  ),
+                );
               },
             ),
           ],
