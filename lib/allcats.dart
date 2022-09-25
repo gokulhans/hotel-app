@@ -5,9 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final db = FirebaseFirestore.instance;
+String search = '';
 
-class AllCats extends StatelessWidget {
-  const AllCats({Key? key}) : super(key: key);
+class AllCats extends StatefulWidget {
+  const AllCats({Key? key, required this.title}) : super(key: key);
+  final String title;
+  @override
+  State<AllCats> createState() => _AllCatsState();
+}
+
+class _AllCatsState extends State<AllCats> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,6 +23,37 @@ class AllCats extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
+        leading: Column(
+          children: [
+            TextField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                // Used a ternary operator to check if isUpdate is true then display
+                // Update name.
+                labelText: 'TYPE TO SEARCH',
+                hintText: 'SEARCH',
+              ),
+              onChanged: (String _val) {
+                // Storing the value of the text entered in the variable value.
+                search = _val;
+              },
+            ),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.search, size: 18),
+              label: const Text("Search"),
+              onPressed: () {
+                // Perform some action
+                Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Menucard(
+                                      title: search),
+                                ),
+                              )
+              },
+            ),
+          ],
+        ),
         title: const Text('All Categories'),
         centerTitle: true,
       ),
@@ -28,6 +66,7 @@ class AllCats extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
+
           return ListView.builder(
             itemCount: snapshot.data?.docs.length,
             itemBuilder: (context, int index) {
@@ -41,14 +80,16 @@ class AllCats extends StatelessWidget {
                         children: [
                           ListTile(
                             onTap: () => {
-                                            Navigator.push(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Catpage(title:documentSnapshot['cat'],),
+                                  builder: (context) => Catpage(
+                                      title: documentSnapshot['cat'],
+                                      type: widget.title),
                                 ),
                               )
                             },
-                            title:Text(documentSnapshot['cat']) ,
+                            title: Text(documentSnapshot['cat']),
                             // title:Text(documentSnapshot['table']) ,
                           ),
                         ],

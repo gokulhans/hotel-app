@@ -58,11 +58,12 @@ class MyApp extends StatelessWidget {
           );
         },
         'allcats': (ctx) {
-          return const AllCats();
+          return const AllCats(title: 'IN',);
         },
         'cat': (ctx) {
           return Catpage(
             title: 'snacks',
+            type: 'IN',
           );
         },
       },
@@ -115,8 +116,8 @@ class _MainPageState extends State<MainPage> {
       // body: const SingleChildScrollView(child: Menu()),
       body: const TabBarView(
         children: [
-          Menu(title: 'IN'),
-          Menu(title:'OUT'),
+          AllCats(title: 'IN'),
+          AllCats(title:'OUT'),
         ],
       ),
     );

@@ -266,6 +266,7 @@ showBottomSheet(
                   MaterialStateProperty.all(Colors.lightBlueAccent),
             ),
             onPressed: () {
+
               // Check to see if isUpdate is true then update the value else add the value
               if (isUpdate) {
                 db.collection('eduapp').doc(documentSnapshot?.id).update({
@@ -311,14 +312,13 @@ showBottomSheet(
 }
 
 editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
-  
   value = documentSnapshot?['name'];
-  image= documentSnapshot?['image'];
-  des= documentSnapshot?['des'];
-  type= documentSnapshot?['type'];
-  category= documentSnapshot?['category'];
-  price= documentSnapshot?['price']; // use num data type
-  available= documentSnapshot?['available'];
+  image = documentSnapshot?['image'];
+  des = documentSnapshot?['des'];
+  type = documentSnapshot?['type'];
+  category = documentSnapshot?['category'];
+  price = documentSnapshot?['price']; // use num data type
+  available = documentSnapshot?['available'];
 
   return Padding(
     padding: const EdgeInsets.only(top: 20),
@@ -409,6 +409,7 @@ editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
                 ),
               ),
               TextFormField(
+                readOnly: true,
                 initialValue: documentSnapshot?['available'],
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -422,6 +423,17 @@ editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
                   available = _val;
                 },
               ),
+              DropdownButton<String>(
+                items: <String>['yes','no'].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  available = value;
+                },
+              )
             ],
           ),
         ),

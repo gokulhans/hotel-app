@@ -9,8 +9,9 @@ final db = FirebaseFirestore.instance;
 
 
 class Catpage extends StatefulWidget {
-  Catpage({Key? key, required this.title}) : super(key: key);
+  Catpage({Key? key, required this.title,required this.type}) : super(key: key);
   final String title;
+  final String type;
   // Create a reference to the cities collection
         
     
@@ -32,7 +33,7 @@ class _CatpageState extends State<Catpage> {
       ),
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget
-        stream: db.collection('eduapp').where("category",isEqualTo: widget.title ).snapshots(),
+        stream: db.collection('eduapp').where("category",isEqualTo: widget.title ).where("type",isEqualTo: widget.type ).snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(
