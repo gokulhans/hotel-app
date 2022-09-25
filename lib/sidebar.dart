@@ -49,6 +49,11 @@ class NavDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.info),
+            title: const Text('All Categories'),
+            onTap: () => {Navigator.of(context).pushNamed('allcats')},
+          ),
+          ListTile(
+            leading: const Icon(Icons.info),
             title: const Text('Admin Page'),
             onTap: () => {Navigator.of(context).pushNamed('admin')},
           ),

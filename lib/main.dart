@@ -1,8 +1,8 @@
 import 'package:educationapp/admin.dart';
+import 'package:educationapp/allcats.dart';
 import 'package:educationapp/alltables.dart';
-import 'package:educationapp/demo.dart';
+import 'package:educationapp/cat.dart';
 import 'package:educationapp/menu.dart';
-import 'package:educationapp/menucard.dart';
 import 'package:educationapp/orders.dart';
 import 'package:educationapp/sidebar.dart';
 import 'package:educationapp/table.dart';
@@ -57,6 +57,14 @@ class MyApp extends StatelessWidget {
             title: 'df',
           );
         },
+        'allcats': (ctx) {
+          return const AllCats();
+        },
+        'cat': (ctx) {
+          return Catpage(
+            title: 'snacks',
+          );
+        },
       },
       home: const DefaultTabController(
         length: 2,
@@ -79,7 +87,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       drawer: const NavDrawer(),
       appBar: AppBar(
-        bottom:  TabBar(
+        bottom:  const TabBar(
           isScrollable: true,
           tabs: [
             Tab(text: 'OUT',),

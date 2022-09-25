@@ -8,6 +8,7 @@ String? des;
 String? count;
 bool? order = false;
 String? table = 'undefined';
+String? spec = 'no specification';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key,required this.title}) : super(key: key);
@@ -35,7 +36,7 @@ class _MenuState extends State<Menu> {
       ),
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget
-        stream:  db.collection('eduapp').where("type",isEqualTo: widget.title ).snapshots(),
+        stream:  db.collection('eduapp').where("type",isEqualTo: widget.title ).where("available",isEqualTo: "yes" ).snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -65,7 +66,7 @@ class _MenuState extends State<Menu> {
                                     title: Center(
                                       child: Text(
                                         documentSnapshot['name'],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.w900,
                                           fontSize: 20,
                                         ),
@@ -78,18 +79,11 @@ class _MenuState extends State<Menu> {
                                   ),
                                    Text(
                                         'price: '+documentSnapshot['price'],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.w900,
                                           fontSize: 20,
                                         ),
-                                      ),
-                                   Text(
-                                        'available : '+documentSnapshot['available'],
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 20,
-                                        ),
-                                      ),
+                                      ),            
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
@@ -166,8 +160,8 @@ addOrder(BuildContext context, DocumentSnapshot? documentSnapshot) {
           child: Column(
             children: [
               TextField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
                   // Used a ternary operator to check if isUpdate is true then display
                   // Update name.
                   labelText: 'No. of items',
@@ -176,6 +170,19 @@ addOrder(BuildContext context, DocumentSnapshot? documentSnapshot) {
                 onChanged: (String _val) {
                   // Storing the value of the text entered in the variable value.
                   count = _val;
+                },
+              ),
+              TextField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: 'Any Specification',
+                  hintText: 'Enter specification',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  spec = _val;
                 },
               ),
             ],
@@ -192,7 +199,8 @@ addOrder(BuildContext context, DocumentSnapshot? documentSnapshot) {
                 'des': documentSnapshot?['des'],
                 'name': documentSnapshot?['name'],
                 'count': count,
-                'table': table
+                'table': table,
+                'spec': spec,
               });
 
               Navigator.pop(context);
@@ -217,8 +225,8 @@ addNewOrder(BuildContext context) {
           child: Column(
             children: [
               TextField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
                   // Used a ternary operator to check if isUpdate is true then display
                   // Update name.
                   labelText: 'User table',

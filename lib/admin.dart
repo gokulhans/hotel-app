@@ -64,7 +64,7 @@ class AdminPage extends StatelessWidget {
                                     title: Center(
                                       child: Text(
                                         documentSnapshot['name'],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.w900,
                                           fontSize: 20,
                                         ),
@@ -122,8 +122,8 @@ class AdminPage extends StatelessWidget {
                                             showModalBottomSheet(
                                               context: context,
                                               builder: (BuildContext context) {
-                                                return showBottomSheet(context,
-                                                    true, documentSnapshot);
+                                                return editPage(
+                                                    context, documentSnapshot);
                                               },
                                               isScrollControlled: true,
                                             );
@@ -304,7 +304,160 @@ showBottomSheet(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('back', style: TextStyle(color: Colors.white)))
+            child: const Text('back', style: TextStyle(color: Colors.white)))
+      ],
+    ),
+  );
+}
+
+editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
+  
+  value = documentSnapshot?['name'];
+  image= documentSnapshot?['image'];
+  des= documentSnapshot?['des'];
+  type= documentSnapshot?['type'];
+  category= documentSnapshot?['category'];
+  price= documentSnapshot?['price']; // use num data type
+  available= documentSnapshot?['available'];
+
+  return Padding(
+    padding: const EdgeInsets.only(top: 20),
+    child: Column(
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Column(
+            children: [
+              TextFormField(
+                initialValue: documentSnapshot?['name'],
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: 'Update name',
+                  hintText: 'Enter An Item',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  value = _val;
+                },
+              ),
+              TextFormField(
+                initialValue: documentSnapshot?['image'],
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: 'Update image',
+                  hintText: 'Enter An image link',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  image = _val;
+                },
+              ),
+              TextFormField(
+                initialValue: documentSnapshot?['des'],
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: 'Update Description',
+                  hintText: 'Enter Description',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  des = _val;
+                },
+              ),
+              TextFormField(
+                initialValue: documentSnapshot?['type'],
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: 'Update Type',
+                  hintText: 'Enter Type',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  type = _val;
+                },
+              ),
+              TextFormField(
+                initialValue: documentSnapshot?['price'],
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: 'Update Price',
+                  hintText: 'Enter Price',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  price = _val;
+                },
+              ),
+              TextFormField(
+                initialValue: documentSnapshot?['category'],
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: 'Update category',
+                  hintText: 'Enter category',
+                ),
+              ),
+              TextFormField(
+                initialValue: documentSnapshot?['available'],
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: 'Update available',
+                  hintText: 'Enter available',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  available = _val;
+                },
+              ),
+            ],
+          ),
+        ),
+        TextButton(
+            style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all(Colors.lightBlueAccent),
+            ),
+            onPressed: () {
+              // Check to see if isUpdate is true then update the value else add the value
+
+              db.collection('eduapp').doc(documentSnapshot?.id).update({
+                'name': value,
+                'image': image,
+                'des': des,
+                'category': category,
+                'type': type,
+                'price': price,
+                'available': available
+              });
+
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'UPDATE',
+              style: TextStyle(color: Colors.white),
+            )),
+        TextButton(
+            style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all(Colors.lightBlueAccent),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('back', style: TextStyle(color: Colors.white)))
       ],
     ),
   );
