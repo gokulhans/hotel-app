@@ -9,8 +9,14 @@ String? count;
 bool? order = false;
 String? table = 'undefined';
 
-class Menu extends StatelessWidget {
-  const Menu({Key? key}) : super(key: key);
+class Menu extends StatefulWidget {
+  const Menu({Key? key,required this.title}) : super(key: key);
+  final String title;
+  @override
+  State<Menu> createState() => _MenuState();
+}
+
+class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +35,7 @@ class Menu extends StatelessWidget {
       ),
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget
-        stream: db.collection('eduapp').snapshots(),
+        stream:  db.collection('eduapp').where("type",isEqualTo: widget.title ).snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -70,6 +76,20 @@ class Menu extends StatelessWidget {
                                     //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
                                     // ),
                                   ),
+                                   Text(
+                                        'price: '+documentSnapshot['price'],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                   Text(
+                                        'available : '+documentSnapshot['available'],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 20,
+                                        ),
+                                      ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
@@ -98,7 +118,7 @@ class Menu extends StatelessWidget {
                                       children: [
                                         ElevatedButton.icon(
                                             icon: const Icon(
-                                                Icons.delete_rounded,
+                                                Icons.food_bank,
                                                 size: 18),
                                             label: const Text("Order"),
                                             onPressed: () {

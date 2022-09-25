@@ -42,17 +42,26 @@ class MyApp extends StatelessWidget {
       routes: {
         'admin': (ctx) {
           return const AdminPage();
-        }, 'orders': (ctx) {
-          return const Orders();
-        }, 'menu': (ctx) {
-          return const Menu();
         },
-       'alltables': (ctx) {
+        'orders': (ctx) {
+          return const Orders();
+        },
+        'menu': (ctx) {
+          return const Menu(title:'OUT');
+        },
+        'alltables': (ctx) {
           return const AllTables();
-        },'table': (ctx) {
-          return  Tablepage(title: 'df',);
-        },},
-      home: const Scaffold(body: MainPage()),
+        },
+        'table': (ctx) {
+          return Tablepage(
+            title: 'df',
+          );
+        },
+      },
+      home: const DefaultTabController(
+        length: 2,
+        child: Scaffold(body: MainPage()),
+      ),
     );
   }
 }
@@ -65,12 +74,18 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const NavDrawer(),
       appBar: AppBar(
+        bottom:  TabBar(
+          isScrollable: true,
+          tabs: [
+            Tab(text: 'OUT',),
+            Tab(text: 'IN'),
+          ],
+        ),
         systemOverlayStyle: const SystemUiOverlayStyle(
           // Status bar color
           statusBarColor: Colors.white,
@@ -86,8 +101,27 @@ class _MainPageState extends State<MainPage> {
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.w800),
         ),
-        actions: [
-          // IconButton(
+        actions: [],
+        iconTheme: const IconThemeData(color: Colors.green),
+      ),
+      // body: const SingleChildScrollView(child: Menu()),
+      body: const TabBarView(
+        children: [
+          Menu(title: 'IN'),
+          Menu(title:'OUT'),
+        ],
+      ),
+    );
+  }
+
+  // Future<void> saveNote() async {
+  //   final test = NoteDB().test();
+  //   print(test);
+  //   return test;
+  // }
+}
+
+ // IconButton(
           //   padding: const EdgeInsets.symmetric(horizontal: 24),
           //   icon: const Icon(
           //     Icons.admin_panel_settings,
@@ -135,18 +169,3 @@ class _MainPageState extends State<MainPage> {
           //     Navigator.of(context).pushNamed('alltables');
           //   },
           // ),
-        ],
-        iconTheme: const IconThemeData(color: Colors.green),
-      ),
-      // body: const SingleChildScrollView(child: Menu()),  
-      body: Menu(), 
-       
-    );
-  }
-
-  // Future<void> saveNote() async {
-  //   final test = NoteDB().test();
-  //   print(test);
-  //   return test;
-  // }
-}

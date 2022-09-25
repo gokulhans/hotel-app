@@ -5,6 +5,10 @@ final db = FirebaseFirestore.instance;
 String? value;
 String? image;
 String? des;
+String? type;
+String? category;
+String? price; // use num data type
+String? available;
 
 class AdminPage extends StatelessWidget {
   const AdminPage({Key? key}) : super(key: key);
@@ -19,6 +23,7 @@ class AdminPage extends StatelessWidget {
             builder: (context) {
               return showBottomSheet(context, false, null);
             },
+            isScrollControlled: true,
           );
         },
         child: const Icon(Icons.add),
@@ -120,6 +125,7 @@ class AdminPage extends StatelessWidget {
                                                 return showBottomSheet(context,
                                                     true, documentSnapshot);
                                               },
+                                              isScrollControlled: true,
                                             );
                                           },
                                         ),
@@ -199,6 +205,58 @@ showBottomSheet(
                   des = _val;
                 },
               ),
+              TextField(
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: isUpdate ? 'Update Type' : 'Add Type',
+                  hintText: 'Enter Type',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  type = _val;
+                },
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: isUpdate ? 'Update Price' : 'Add Price',
+                  hintText: 'Enter Price',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  price = _val;
+                },
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: isUpdate ? 'Update category' : 'Add category',
+                  hintText: 'Enter category',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  category = _val;
+                },
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: isUpdate ? 'Update available' : 'Add available',
+                  hintText: 'Enter available',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  available = _val;
+                },
+              ),
             ],
           ),
         ),
@@ -210,14 +268,25 @@ showBottomSheet(
             onPressed: () {
               // Check to see if isUpdate is true then update the value else add the value
               if (isUpdate) {
-                db
-                    .collection('eduapp')
-                    .doc(documentSnapshot?.id)
-                    .update({'name': value, 'image': image, 'des': des});
+                db.collection('eduapp').doc(documentSnapshot?.id).update({
+                  'name': value,
+                  'image': image,
+                  'des': des,
+                  'category': category,
+                  'type': type,
+                  'price': price,
+                  'available': available
+                });
               } else {
-                db
-                    .collection('eduapp')
-                    .add({'name': value, 'image': image, 'des': des});
+                db.collection('eduapp').add({
+                  'name': value,
+                  'image': image,
+                  'des': des,
+                  'category': category,
+                  'type': type,
+                  'price': price,
+                  'available': available
+                });
               }
               Navigator.pop(context);
             },
@@ -227,6 +296,15 @@ showBottomSheet(
                     style: TextStyle(color: Colors.white),
                   )
                 : const Text('ADD', style: TextStyle(color: Colors.white))),
+        TextButton(
+            style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all(Colors.lightBlueAccent),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('back', style: TextStyle(color: Colors.white)))
       ],
     ),
   );

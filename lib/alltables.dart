@@ -48,6 +48,7 @@ class AllTables extends StatelessWidget {
                               )
                             },
                             title:Text(documentSnapshot['table']) ,
+                            // title:Text(documentSnapshot['table']) ,
                           ),
                         ],
                       ),
