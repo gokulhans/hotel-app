@@ -1,11 +1,11 @@
 import 'package:educationapp/cat.dart';
 import 'package:educationapp/menucard.dart';
+import 'package:educationapp/singlemenu.dart';
 import 'package:educationapp/table.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final db = FirebaseFirestore.instance;
-String search = '';
 
 class AllCats extends StatefulWidget {
   const AllCats({Key? key, required this.title}) : super(key: key);
@@ -23,36 +23,6 @@ class _AllCatsState extends State<AllCats> {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        leading: Column(
-          children: [
-            TextField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                // Used a ternary operator to check if isUpdate is true then display
-                // Update name.
-                labelText: 'TYPE TO SEARCH',
-                hintText: 'SEARCH',
-              ),
-              onChanged: (String _val) {
-                // Storing the value of the text entered in the variable value.
-                search = _val;
-              },
-            ),
-            ElevatedButton.icon(
-              icon: const Icon(Icons.search, size: 18),
-              label: const Text("Search"),
-              onPressed: () {
-                // Perform some action
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Menucard(title: search),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
         title: const Text('All Categories'),
         centerTitle: true,
       ),

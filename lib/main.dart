@@ -4,6 +4,7 @@ import 'package:educationapp/alltables.dart';
 import 'package:educationapp/cat.dart';
 import 'package:educationapp/menu.dart';
 import 'package:educationapp/orders.dart';
+import 'package:educationapp/searchbar.dart';
 import 'package:educationapp/sidebar.dart';
 import 'package:educationapp/table.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,9 @@ class MyApp extends StatelessWidget {
             title: 'snacks',
             type: 'IN',
           );
+        },
+        'search': (ctx) {
+          return const Search();
         },
       },
       home: const DefaultTabController(
