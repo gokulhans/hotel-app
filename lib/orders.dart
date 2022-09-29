@@ -131,6 +131,13 @@ class Orders extends StatelessWidget {
                                           },
                                           child: Text(documentSnapshot['count']),
                                         ),
+                                        ElevatedButton(
+                                         
+                                          onPressed: () {
+                                            
+                                          },
+                                          child: Text(documentSnapshot['spec']),
+                                        ),
                                       ],
                                     ),
                                   ),

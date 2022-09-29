@@ -62,6 +62,11 @@ class NavDrawer extends StatelessWidget {
             title: const Text('Search Page'),
             onTap: () => {Navigator.of(context).pushNamed('search')},
           ),
+          ListTile(
+            leading: const Icon(Icons.info),
+            title: const Text('Test Page'),
+            onTap: () => {Navigator.of(context).pushNamed('test')},
+          ),
          
         ],
       ),

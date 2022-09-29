@@ -4,6 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 final db = FirebaseFirestore.instance;
 
 
+String? value;
+String? image;
+String? des;
+String? count;
+bool? order = false;
+String? table = 'undefined';
+String? spec = 'no specification';
 
 
 
@@ -93,7 +100,35 @@ class _CatpageState extends State<Catpage> {
                                           color: Colors.black.withOpacity(0.6)),
                                     ),
                                   ),
-                               
+                                Padding(
+                                    padding: const EdgeInsets.only(left: 2),
+                                    child: ButtonBar(
+                                      alignment: MainAxisAlignment.start,
+                                      children: [
+                                        ElevatedButton.icon(
+                                            icon: const Icon(
+                                                Icons.food_bank,
+                                                size: 18),
+                                            label: const Text("Order"),
+                                            onPressed: () {
+                                              showModalBottomSheet(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return addOrder(context,
+                                                        documentSnapshot);
+                                                  });
+                                            }),
+                                        ElevatedButton.icon(
+                                            icon:  Icon(
+                                                Icons.price_change,
+                                                size: 18),
+                                            label:  Text(documentSnapshot['price']),
+                                            onPressed: (){},
+                                            ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -110,4 +145,69 @@ class _CatpageState extends State<Catpage> {
       ),
     );
   }
+}
+
+addOrder(BuildContext context, DocumentSnapshot? documentSnapshot) {
+  // Added the isUpdate argument to check if our item has been updated
+  return Padding(
+    padding: const EdgeInsets.only(top: 20),
+    child: Column(
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Column(
+            children: [
+              TextField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: 'No. of items',
+                  hintText: 'Enter A number',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  count = _val;
+                },
+              ),
+              TextField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  // Used a ternary operator to check if isUpdate is true then display
+                  // Update name.
+                  labelText: 'Any Specification',
+                  hintText: 'Enter specification',
+                ),
+                onChanged: (String _val) {
+                  // Storing the value of the text entered in the variable value.
+                  spec = _val;
+                },
+              ),
+            ],
+          ),
+        ),
+        TextButton(
+            style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all(Colors.lightBlueAccent),
+            ),
+            onPressed: () {
+              db.collection('orders').add({
+                'image': documentSnapshot?['image'],
+                'des': documentSnapshot?['des'],
+                'name': documentSnapshot?['name'],
+                'count': count,
+                'table': table,
+                'spec': spec,
+              });
+
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'Add',
+              style: TextStyle(color: Colors.white),
+            )),
+      ],
+    ),
+  );
 }

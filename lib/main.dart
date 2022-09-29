@@ -3,14 +3,14 @@ import 'package:educationapp/allcats.dart';
 import 'package:educationapp/alltables.dart';
 import 'package:educationapp/cat.dart';
 import 'package:educationapp/menu.dart';
+import 'package:educationapp/menucard.dart';
 import 'package:educationapp/orders.dart';
-import 'package:educationapp/searchbar.dart';
+import 'package:educationapp/search.dart';
 import 'package:educationapp/sidebar.dart';
 import 'package:educationapp/table.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       routes: {
         'admin': (ctx) {
@@ -48,7 +48,10 @@ class MyApp extends StatelessWidget {
           return const Orders();
         },
         'menu': (ctx) {
-          return const Menu(title:'OUT');
+          return const Menu(title: 'OUT');
+        },
+        'test': (ctx) {
+          return const TabBarDemo();
         },
         'alltables': (ctx) {
           return const AllTables();
@@ -59,7 +62,9 @@ class MyApp extends StatelessWidget {
           );
         },
         'allcats': (ctx) {
-          return const AllCats(title: 'IN',);
+          return const AllCats(
+            title: 'IN',
+          );
         },
         'cat': (ctx) {
           return Catpage(
@@ -68,117 +73,31 @@ class MyApp extends StatelessWidget {
           );
         },
         'search': (ctx) {
-          return const Search();
+          return const Searchbar();
         },
       },
-      home: const DefaultTabController(
+      home: DefaultTabController(
         length: 2,
-        child: Scaffold(body: MainPage()),
-      ),
-    );
-  }
-}
-
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
-
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+        child: Scaffold(
       drawer: const NavDrawer(),
-      appBar: AppBar(
-        bottom:  const TabBar(
-          isScrollable: true,
-          tabs: [
-            Tab(text: 'OUT',),
-            Tab(text: 'IN'),
-          ],
-        ),
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          // Status bar color
-          statusBarColor: Colors.white,
-          // Status bar brightness (optional)
-          statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
-        ),
-        backgroundColor: Colors.white,
-        bottomOpacity: 0.0,
-        elevation: 0.0,
-        centerTitle: true,
-        title: const Text(
-          "Hotel Disoosa",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.w800),
-        ),
-        actions: [],
-        iconTheme: const IconThemeData(color: Colors.green),
-      ),
-      // body: const SingleChildScrollView(child: Menu()),
-      body: const TabBarView(
-        children: [
-          AllCats(title: 'IN'),
-          AllCats(title:'OUT'),
-        ],
-      ),
+          appBar: AppBar(
+            bottom: const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.food_bank ), text: 'IN',),
+                Tab(icon: Icon(Icons.food_bank), text: 'OUT',),
+              ],
+            ), // TabBar
+            title: const Center(child: Text('NatuRoots')),
+            backgroundColor: Colors.green,
+          ), // AppBar
+          body: const TabBarView(
+            children: [
+              AllCats(title: 'IN'),
+              AllCats(title: 'OUT'),
+            ],
+          ), // TabBarView
+        ), // Scaffold
+      ), // DefaultTabController
     );
   }
-
-  // Future<void> saveNote() async {
-  //   final test = NoteDB().test();
-  //   print(test);
-  //   return test;
-  // }
 }
-
- // IconButton(
-          //   padding: const EdgeInsets.symmetric(horizontal: 24),
-          //   icon: const Icon(
-          //     Icons.admin_panel_settings,
-          //     color: Colors.teal,
-          //   ),
-          //   onPressed: () {
-          //     // AdmobHelper.createInterad();
-          //     // AdmobHelper.showInterad();
-          //     Navigator.of(context).pushNamed('admin');
-          //   },
-          // ),
-          // IconButton(
-          //   padding: const EdgeInsets.symmetric(horizontal: 24),
-          //   icon: const Icon(
-          //     Icons.food_bank,
-          //     color: Colors.teal,
-          //   ),
-          //   onPressed: () {
-          //     // AdmobHelper.createInterad();
-          //     // AdmobHelper.showInterad();
-          //     Navigator.of(context).pushNamed('orders');
-          //   },
-          // ),
-          // IconButton(
-          //   padding: const EdgeInsets.symmetric(horizontal: 24),
-          //   icon: const Icon(
-          //     Icons.menu_book,
-          //     color: Colors.teal,
-          //   ),
-          //   onPressed: () {
-          //     // AdmobHelper.createInterad();
-          //     // AdmobHelper.showInterad();
-          //     Navigator.of(context).pushNamed('menu');
-          //   },
-          // ),
-          // IconButton(
-          //   padding: const EdgeInsets.symmetric(horizontal: 24),
-          //   icon: const Icon(
-          //     Icons.table_bar,
-          //     color: Colors.teal,
-          //   ),
-          //   onPressed: () {
-          //     // AdmobHelper.createInterad();
-          //     // AdmobHelper.showInterad();
-          //     Navigator.of(context).pushNamed('alltables');
-          //   },
-          // ),
