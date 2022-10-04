@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final db = FirebaseFirestore.instance;
-String? table = 'undefined';
+String table = 'undefined';
 
 
 class AllCats extends StatefulWidget {
@@ -61,6 +61,7 @@ class _AllCatsState extends State<AllCats> {
                                 MaterialPageRoute(
                                   builder: (context) => Catpage(
                                       title: documentSnapshot['cat'],
+                                      table: table,
                                       type: widget.title),
                                 ),
                               )
@@ -112,7 +113,7 @@ addNewOrder(BuildContext context) {
         TextButton(
             style: ButtonStyle(
               backgroundColor:
-                  MaterialStateProperty.all(Colors.lightBlueAccent),
+                  MaterialStateProperty.all(Colors.green),
             ),
             onPressed: () {
               db.collection('tables').add({'table': table});

@@ -27,16 +27,16 @@ class NavDrawer extends StatelessWidget {
           ),
        
          
-          ListTile(
-            leading: const Icon(Icons.copyright_sharp),
-            title: const Text('Menu'),
-            onTap: () => {Navigator.of(context).pushNamed('menu')},
-          ),
-          ListTile(
-            leading: const Icon(Icons.copyright_sharp),
-            title: const Text('Orders'),
-            onTap: () => {Navigator.of(context).pushNamed('orders')},
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.copyright_sharp),
+          //   title: const Text('Menu'),
+          //   onTap: () => {Navigator.of(context).pushNamed('menu')},
+          // ),
+          // ListTile(
+          //   leading: const Icon(Icons.copyright_sharp),
+          //   title: const Text('Orders'),
+          //   onTap: () => {Navigator.of(context).pushNamed('orders')},
+          // ),
           // ListTile(
           //   leading: Icon(Icons.favorite,color: Colors.red,),
           //   title: Text('Support Us',style: TextStyle(color: Colors.red,fontWeight: FontWeight.w900),),
@@ -47,11 +47,11 @@ class NavDrawer extends StatelessWidget {
             title: const Text('All Tables'),
             onTap: () => {Navigator.of(context).pushNamed('alltables')},
           ),
-          ListTile(
-            leading: const Icon(Icons.info),
-            title: const Text('All Categories'),
-            onTap: () => {Navigator.of(context).pushNamed('allcats')},
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.info),
+          //   title: const Text('All Categories'),
+          //   onTap: () => {Navigator.of(context).pushNamed('allcats')},
+          // ),
           ListTile(
             leading: const Icon(Icons.info),
             title: const Text('Admin Page'),

@@ -1,8 +1,3 @@
-in prod
-out chaya
-item type category
-price
-item available
 
 
 import 'package:flutter/material.dart';
@@ -200,7 +195,7 @@ showBottomSheet(
             child: isUpdate
                 ? const Text(
                     'UPDATE',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: white),
                   )
                 : const Text('ADD', style: TextStyle(color: Colors.white))),
       ],

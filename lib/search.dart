@@ -29,6 +29,8 @@ class _SearchbarState extends State<Searchbar> {
         body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance.collection('eduapp').snapshots(),
           builder: (context, snapshots) {
+
+            
             return (snapshots.connectionState == ConnectionState.waiting)
                 ? Center(
                     child: CircularProgressIndicator(),
@@ -87,7 +89,7 @@ class _SearchbarState extends State<Searchbar> {
                         );
                       }
                       
-                      return Text('ITEM NOT FOUND');
+                      return Container();
                     });
           },
         ));

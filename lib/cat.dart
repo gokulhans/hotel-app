@@ -1,3 +1,4 @@
+import 'package:educationapp/details.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -9,16 +10,17 @@ String? image;
 String? des;
 String? count;
 bool? order = false;
-String? table = 'undefined';
+// String? table = 'undefined';
 String? spec = 'no specification';
 
 
 
 
 class Catpage extends StatefulWidget {
-  Catpage({Key? key, required this.title,required this.type}) : super(key: key);
+  const Catpage({Key? key, required this.title,required this.type,required this.table}) : super(key: key);
   final String title;
   final String type;
+  final String table;
   // Create a reference to the cities collection
         
     
@@ -47,6 +49,7 @@ class _CatpageState extends State<Catpage> {
               child: CircularProgressIndicator(),
             );
           }
+        
           return ListView.builder(
             itemCount: snapshot.data?.docs.length,
             itemBuilder: (context, int index) {
@@ -58,82 +61,34 @@ class _CatpageState extends State<Catpage> {
                       clipBehavior: Clip.antiAlias,
                       child: Column(
                         children: [
-                          ListTile(
-                            title: Card(
-                              clipBehavior: Clip.antiAlias,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                   ListTile(
-                                    // leading: Icon(Icons.arrow_drop_down_circle),
-                                    title: Center(
-                                      child: Text(
-                                        documentSnapshot['name'],
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ),
-                                    // subtitle: Text(
-                                    //   'Secondary Text',
-                                    //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                                    // ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      height: 200,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(documentSnapshot['image']),
-                                      )),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Text(
-                                      documentSnapshot['des'],
-                                      style: TextStyle(
-                                          color: Colors.black.withOpacity(0.6)),
-                                    ),
-                                  ),
-                                Padding(
-                                    padding: const EdgeInsets.only(left: 2),
-                                    child: ButtonBar(
-                                      alignment: MainAxisAlignment.start,
-                                      children: [
-                                        ElevatedButton.icon(
-                                            icon: const Icon(
-                                                Icons.food_bank,
-                                                size: 18),
-                                            label: const Text("Order"),
-                                            onPressed: () {
-                                              showModalBottomSheet(
+                             ListTile(
+                            onTap: () => {
+                               showModalBottomSheet(
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) {
                                                     return addOrder(context,
                                                         documentSnapshot);
-                                                  });
-                                            }),
-                                        ElevatedButton.icon(
-                                            icon:  Icon(
-                                                Icons.price_change,
-                                                size: 18),
-                                            label:  Text(documentSnapshot['price']),
-                                            onPressed: (){},
-                                            ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                                  })
+                                                     },
+                            trailing: IconButton(
+                               onPressed: () => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Details(
+                                      id: documentSnapshot.id,
+                                      title:documentSnapshot['name'],
+                                      ),
+                                ),
+                              )
+                            },
+                              icon: const Icon(Icons.more)
                             ),
+                            title: Text(documentSnapshot['name']),
+                            // title:Text(documentSnapshot['table']) ,
                           ),
-                        ],
+                            ],
                       ),
                     )
                   ],
@@ -145,7 +100,6 @@ class _CatpageState extends State<Catpage> {
       ),
     );
   }
-}
 
 addOrder(BuildContext context, DocumentSnapshot? documentSnapshot) {
   // Added the isUpdate argument to check if our item has been updated
@@ -197,7 +151,7 @@ addOrder(BuildContext context, DocumentSnapshot? documentSnapshot) {
                 'des': documentSnapshot?['des'],
                 'name': documentSnapshot?['name'],
                 'count': count,
-                'table': table,
+                'table': widget.table,
                 'spec': spec,
               });
 
@@ -210,4 +164,5 @@ addOrder(BuildContext context, DocumentSnapshot? documentSnapshot) {
       ],
     ),
   );
+}
 }

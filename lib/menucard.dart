@@ -11,23 +11,41 @@ class TabBarDemo extends StatelessWidget {
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: AppBar(
-            bottom: const TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.food_bank ), text: 'IN',),
-                Tab(icon: Icon(Icons.food_bank), text: 'OUT',),
-              ],
-            ), // TabBar
-            title: const Center(child: Text('NatuRoots')),
-            backgroundColor: Colors.green,
-          ), // AppBar
-          body: const TabBarView(
-            children: [
-              AllCats(title: 'IN'),
-              AllCats(title: 'OUT'),
-            ],
-          ), // TabBarView
-        ), // Scaffold
+        
+          body: ListTile(
+                title: Column(
+                  children: [
+                    Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        children: [
+                            ButtonBar(
+                                      alignment: MainAxisAlignment.start,
+                                      children: [
+                                        ElevatedButton.icon(
+                                          icon: const Icon(Icons.delete_rounded,
+                                              size: 18),
+                                          label: const Text("Delete"),
+                                          onPressed: () {
+                                            // Perform some action
+                                            db
+                                                .collection('eduapp')
+                                                .doc()
+                                                .delete();
+                                          },
+                                        ),
+                                       
+                                      ],
+                                    ),
+                            ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+          // TabBarView
+         // affold
+      ), // DefaultTabController
       ), // DefaultTabController
     ); // MaterialApp
   }

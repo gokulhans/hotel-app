@@ -15,142 +15,84 @@ class AdminPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: FloatingActionButton(
-        onPressed: () {
-          // When the User clicks on the button, display a BottomSheet
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return showBottomSheet(context, false, null);
-            },
-            isScrollControlled: true,
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
-      appBar: AppBar(
-        title: const Text('ADMIN PANEL'),
-        centerTitle: true,
-      ),
-      body: StreamBuilder(
-        // Reading Items form our Database Using the StreamBuilder widget
-        stream: db.collection('eduapp').snapshots(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
+        bottomNavigationBar: FloatingActionButton(
+          onPressed: () {
+            // When the User clicks on the button, display a BottomSheet
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return showBottomSheet(context, false, null);
+              },
+              isScrollControlled: true,
             );
-          }
-          return ListView.builder(
-            itemCount: snapshot.data?.docs.length,
-            itemBuilder: (context, int index) {
-              DocumentSnapshot documentSnapshot = snapshot.data.docs[index];
-              return ListTile(
-                title: Column(
-                  children: [
-                    Card(
-                      clipBehavior: Clip.antiAlias,
-                      child: Column(
-                        children: [
-                          ListTile(
-                            // leading: const Icon(Icons.arrow_drop_down_circle),
-                            title: Card(
-                              clipBehavior: Clip.antiAlias,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
+          },
+          child: const Icon(Icons.add),
+        ),
+        appBar: AppBar(
+          title: const Text('ADMIN PANEL'),
+          centerTitle: true,
+        ),
+        body: StreamBuilder(
+            // Reading Items form our Database Using the StreamBuilder widget
+            stream: db.collection('eduapp').snapshots(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return ListView.builder(
+                itemCount: snapshot.data?.docs.length,
+                itemBuilder: (context, int index) {
+                  DocumentSnapshot documentSnapshot = snapshot.data.docs[index];
+                  return ListTile(
+                    title: Column(
+                      children: [
+                        Card(
+                          clipBehavior: Clip.antiAlias,
+                          child: Column(
+                            children: [
+                              ButtonBar(
+                                alignment: MainAxisAlignment.start,
                                 children: [
-                                  ListTile(
-                                    // leading: Icon(Icons.arrow_drop_down_circle),
-                                    title: Center(
-                                      child: Text(
-                                        documentSnapshot['name'],
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ),
-                                    // subtitle: Text(
-                                    //   'Secondary Text',
-                                    //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                                    // ),
+                                  ElevatedButton.icon(
+                                    icon: const Icon(Icons.delete_rounded,
+                                        size: 18),
+                                    label: const Text("Delete"),
+                                    onPressed: () {
+                                      // Perform some action
+                                      db
+                                          .collection('eduapp')
+                                          .doc(documentSnapshot.id)
+                                          .delete();
+                                    },
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      height: 200,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                            documentSnapshot['image']),
-                                      )),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Text(
-                                      documentSnapshot['des'],
-                                      style: TextStyle(
-                                          color: Colors.black.withOpacity(0.6)),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 2),
-                                    child: ButtonBar(
-                                      alignment: MainAxisAlignment.start,
-                                      children: [
-                                        ElevatedButton.icon(
-                                          icon: const Icon(Icons.delete_rounded,
-                                              size: 18),
-                                          label: const Text("Delete"),
-                                          onPressed: () {
-                                            // Perform some action
-                                            db
-                                                .collection('eduapp')
-                                                .doc(documentSnapshot.id)
-                                                .delete();
-                                          },
-                                        ),
-                                        ElevatedButton.icon(
-                                          icon:
-                                              const Icon(Icons.edit, size: 16),
-                                          label: const Text("Edit"),
-                                          onPressed: () {
-                                            // Perform some action
-                                            showModalBottomSheet(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return editPage(
-                                                    context, documentSnapshot);
-                                              },
-                                              isScrollControlled: true,
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
+                                  ElevatedButton.icon(
+                                    icon: const Icon(Icons.edit, size: 16),
+                                    label: const Text("Edit"),
+                                    onPressed: () {
+                                      // Perform some action
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return editPage(
+                                              context, documentSnapshot);
+                                        },
+                                        isScrollControlled: true,
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
-                            ),
-                            // subtitle: Text(
-                            //   'Secondary Text',
-                            //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                            // ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                        )
+                      ],
+                    ),
+                  );
+                },
               );
-            },
-          );
-        },
-      ),
-    );
+            }));
   }
 }
 
@@ -210,7 +152,7 @@ showBottomSheet(
                   border: const OutlineInputBorder(),
                   // Used a ternary operator to check if isUpdate is true then display
                   // Update name.
-                  labelText: isUpdate ? 'Update Type' : 'Add Type',
+                  labelText: isUpdate ? 'Update Type' : 'Add Type IN or OUT',
                   hintText: 'Enter Type',
                 ),
                 onChanged: (String _val) {
@@ -249,7 +191,9 @@ showBottomSheet(
                   border: const OutlineInputBorder(),
                   // Used a ternary operator to check if isUpdate is true then display
                   // Update name.
-                  labelText: isUpdate ? 'Update available' : 'Add available',
+                  labelText: isUpdate
+                      ? 'Update available'
+                      : 'Add available, yes or no',
                   hintText: 'Enter available',
                 ),
                 onChanged: (String _val) {
@@ -266,7 +210,6 @@ showBottomSheet(
                   MaterialStateProperty.all(Colors.lightBlueAccent),
             ),
             onPressed: () {
-
               // Check to see if isUpdate is true then update the value else add the value
               if (isUpdate) {
                 db.collection('eduapp').doc(documentSnapshot?.id).update({
@@ -319,6 +262,7 @@ editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
   category = documentSnapshot?['category'];
   price = documentSnapshot?['price']; // use num data type
   available = documentSnapshot?['available'];
+  // ignore: avoid_print
 
   return Padding(
     padding: const EdgeInsets.only(top: 20),
@@ -424,7 +368,8 @@ editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
                 },
               ),
               DropdownButton<String>(
-                items: <String>['yes','no'].map((String value) {
+                value: documentSnapshot?['available'],
+                items: <String>['yes', 'no'].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -439,11 +384,11 @@ editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
         ),
         TextButton(
             style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(Colors.lightBlueAccent),
+              backgroundColor: MaterialStateProperty.all(Colors.green),
             ),
             onPressed: () {
               // Check to see if isUpdate is true then update the value else add the value
+              // print({value,image,des,type,category,price,available});
 
               db.collection('eduapp').doc(documentSnapshot?.id).update({
                 'name': value,
@@ -463,8 +408,7 @@ editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
             )),
         TextButton(
             style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(Colors.lightBlueAccent),
+              backgroundColor: MaterialStateProperty.all(Colors.green),
             ),
             onPressed: () {
               Navigator.pop(context);

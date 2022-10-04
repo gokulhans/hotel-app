@@ -67,7 +67,8 @@ class MyApp extends StatelessWidget {
           );
         },
         'cat': (ctx) {
-          return Catpage(
+          return const Catpage(
+            table: 'snacks',
             title: 'snacks',
             type: 'IN',
           );
@@ -88,6 +89,7 @@ class MyApp extends StatelessWidget {
               ],
             ), // TabBar
             title: const Center(child: Text('NatuRoots')),
+            centerTitle: true,
             backgroundColor: Colors.green,
           ), // AppBar
           body: const TabBarView(
