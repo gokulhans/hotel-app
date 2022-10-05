@@ -1,3 +1,4 @@
+import 'package:educationapp/details.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -15,7 +16,7 @@ class AdminPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: FloatingActionButton(
+        floatingActionButton: FloatingActionButton(
           onPressed: () {
             // When the User clicks on the button, display a BottomSheet
             showModalBottomSheet(
@@ -34,7 +35,7 @@ class AdminPage extends StatelessWidget {
         ),
         body: StreamBuilder(
             // Reading Items form our Database Using the StreamBuilder widget
-            stream: db.collection('eduapp').snapshots(),
+            stream: db.collection('eduapp').orderBy("name").snapshots(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {
                 return const Center(
@@ -48,6 +49,21 @@ class AdminPage extends StatelessWidget {
                   return ListTile(
                     title: Column(
                       children: [
+                        ListTile(
+                          onTap: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Details(
+                                  id: documentSnapshot.id,
+                                  title: documentSnapshot['name'],
+                                ),
+                              ),
+                            )
+                          },
+                          title: Text(documentSnapshot['name']),
+                          // title:Text(documentSnapshot['table']) ,
+                        ),
                         Card(
                           clipBehavior: Clip.antiAlias,
                           child: Column(
@@ -134,6 +150,8 @@ showBottomSheet(
                 },
               ),
               TextField(
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   // Used a ternary operator to check if isUpdate is true then display
@@ -255,13 +273,13 @@ showBottomSheet(
 }
 
 editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
-  value = documentSnapshot?['name'];
-  image = documentSnapshot?['image'];
-  des = documentSnapshot?['des'];
-  type = documentSnapshot?['type'];
-  category = documentSnapshot?['category'];
-  price = documentSnapshot?['price']; // use num data type
-  available = documentSnapshot?['available'];
+  // value = documentSnapshot?['name'];
+  // image = documentSnapshot?['image'];
+  // des = documentSnapshot?['des'];
+  // type = documentSnapshot?['type'];
+  // category = documentSnapshot?['category'];
+  // price = documentSnapshot?['price'];
+  // available = documentSnapshot?['available'];
   // ignore: avoid_print
 
   return Padding(
@@ -301,6 +319,9 @@ editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
                 },
               ),
               TextFormField(
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                expands: true,
                 initialValue: documentSnapshot?['des'],
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),

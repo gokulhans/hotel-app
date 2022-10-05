@@ -15,7 +15,7 @@ class AdminPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           // When the User clicks on the button, display a BottomSheet
           showModalBottomSheet(
@@ -244,13 +244,14 @@ showBottomSheet(
                   category = _val;
                 },
               ),
-           
               TextField(
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   // Used a ternary operator to check if isUpdate is true then display
                   // Update name.
-                  labelText: isUpdate ? 'Update available' : 'Add available, yes or no',
+                  labelText: isUpdate
+                      ? 'Update available'
+                      : 'Add available, yes or no',
                   hintText: 'Enter available',
                 ),
                 onChanged: (String _val) {
@@ -267,7 +268,6 @@ showBottomSheet(
                   MaterialStateProperty.all(Colors.lightBlueAccent),
             ),
             onPressed: () {
-
               // Check to see if isUpdate is true then update the value else add the value
               if (isUpdate) {
                 db.collection('eduapp').doc(documentSnapshot?.id).update({
@@ -319,7 +319,7 @@ editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
   type = documentSnapshot?['type'];
   category = documentSnapshot?['category'];
   price = documentSnapshot?['price']; // use num data type
-  available = documentSnapshot?['available']; 
+  available = documentSnapshot?['available'];
   // ignore: avoid_print
 
   return Padding(
@@ -426,8 +426,8 @@ editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
                 },
               ),
               DropdownButton<String>(
-                value:documentSnapshot?['available'],
-                items: <String>['yes','no'].map((String value) {
+                value: documentSnapshot?['available'],
+                items: <String>['yes', 'no'].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -442,12 +442,11 @@ editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
         ),
         TextButton(
             style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(Colors.green),
+              backgroundColor: MaterialStateProperty.all(Colors.green),
             ),
             onPressed: () {
               // Check to see if isUpdate is true then update the value else add the value
-  // print({value,image,des,type,category,price,available});
+              // print({value,image,des,type,category,price,available});
 
               db.collection('eduapp').doc(documentSnapshot?.id).update({
                 'name': value,
@@ -467,8 +466,7 @@ editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
             )),
         TextButton(
             style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(Colors.green),
+              backgroundColor: MaterialStateProperty.all(Colors.green),
             ),
             onPressed: () {
               Navigator.pop(context);

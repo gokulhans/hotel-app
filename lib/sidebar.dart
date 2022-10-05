@@ -15,13 +15,10 @@ class NavDrawer extends StatelessWidget {
           DrawerHeader(
             child: Center(
               child: Container(
-                height: 100,
-                width: 100,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image:NetworkImage("https://cdn.pixabay.com/photo/2010/12/13/10/25/canape-2802_960_720.jpg"),
-                )),
+                child: Image.asset('logo.jpg'),
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+               
               ),
             ),
           ),

@@ -11,7 +11,7 @@ String? table = 'undefined';
 String? spec = 'no specification';
 
 class Menu extends StatefulWidget {
-  const Menu({Key? key,required this.title}) : super(key: key);
+  const Menu({Key? key, required this.title}) : super(key: key);
   final String title;
   @override
   State<Menu> createState() => _MenuState();
@@ -21,8 +21,7 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-      bottomNavigationBar: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           // When the User clicks on the button, display a BottomSheet
           showModalBottomSheet(
@@ -36,7 +35,11 @@ class _MenuState extends State<Menu> {
       ),
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget
-        stream:  db.collection('eduapp').where("type",isEqualTo: widget.title ).where("available",isEqualTo: "yes" ).snapshots(),
+        stream: db
+            .collection('eduapp')
+            .where("type", isEqualTo: widget.title)
+            .where("available", isEqualTo: "yes")
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -77,13 +80,13 @@ class _MenuState extends State<Menu> {
                                     //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
                                     // ),
                                   ),
-                                   Text(
-                                        'price: '+documentSnapshot['price'],
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 20,
-                                        ),
-                                      ),            
+                                  Text(
+                                    'price: ' + documentSnapshot['price'],
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 20,
+                                    ),
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
@@ -111,8 +114,7 @@ class _MenuState extends State<Menu> {
                                       alignment: MainAxisAlignment.start,
                                       children: [
                                         ElevatedButton.icon(
-                                            icon: const Icon(
-                                                Icons.food_bank,
+                                            icon: const Icon(Icons.food_bank,
                                                 size: 18),
                                             label: const Text("Order"),
                                             onPressed: () {

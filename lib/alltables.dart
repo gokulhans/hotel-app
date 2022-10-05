@@ -10,7 +10,7 @@ class AllTables extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(Icons.add),
       ),
@@ -20,7 +20,7 @@ class AllTables extends StatelessWidget {
       ),
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget
-        stream: db.collection('tables').snapshots(),
+        stream: db.collection('tables').orderBy("table").snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -36,20 +36,45 @@ class AllTables extends StatelessWidget {
                   children: [
                     Card(
                       clipBehavior: Clip.antiAlias,
-                      child: Column(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          ListTile(
-                            onTap: () => {
-                                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Tablepage(title:documentSnapshot['table'],),
-                                ),
-                              )
-                            },
-                            title:Text(documentSnapshot['table']) ,
-                            // title:Text(documentSnapshot['table']) ,
+                         
+                          Flexible(
+                            child: ListTile(
+                              onTap: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Tablepage(
+                                      title: documentSnapshot['table'],
+                                    ),
+                                  ),
+                                )
+                              },
+                              title: Text(documentSnapshot['table']),
+                              // title:Text(documentSnapshot['table']) ,
+                              
+                            ),
                           ),
+                             ButtonBar(
+                                      alignment: MainAxisAlignment.end,
+                                      children: [
+                                        ElevatedButton.icon(
+                                          icon: const Icon(Icons.delete_rounded,
+                                              size: 18),
+                                          label: const Text("Delete"),
+                                          onPressed: () {
+                                            // Perform some action
+                                            db
+                                                .collection('tables')
+                                                .doc(documentSnapshot.id)
+                                                .delete();
+                                          },
+                                        ),
+                                       
+                                      ],
+                                    ),
                         ],
                       ),
                     )

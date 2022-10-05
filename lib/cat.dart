@@ -32,11 +32,9 @@ class _CatpageState extends State<Catpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.add),
-      ),
+    
       appBar: AppBar(
+        
         title: Text(widget.title),
         centerTitle: true,
       ),
@@ -153,6 +151,7 @@ addOrder(BuildContext context, DocumentSnapshot? documentSnapshot) {
                 'count': count,
                 'table': widget.table,
                 'spec': spec,
+                'type': documentSnapshot?['type'],
               });
 
               Navigator.pop(context);

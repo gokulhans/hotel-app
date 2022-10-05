@@ -3,13 +3,16 @@
 - splash screen
 - logo
 - offline storage
-- details page design
-- Naturoots heading on center 
+
+
+- details page design + 
 
 - Search implementation in front page
 - search err showing no item found
-- item sorted view 
-- design every page simply
+
+- design every page simply +
+
+- edit button need to touch every fie.d to update+
 
 
   if (snapshot.data?.docs.length == 0) {

@@ -25,10 +25,6 @@ class _DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.add),
-        ),
         appBar: AppBar(
           title: Text(widget.title),
           centerTitle: true,
@@ -42,95 +38,91 @@ class _DetailsState extends State<Details> {
                 child: CircularProgressIndicator(),
               );
             }
-           
-        var documentSnapshot = snapshot.data;
 
-            return ListTile(
-              title: Column(
-                children: [
-                  Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: Column(
-                      children: [
-                        ListTile(
-                          title: Card(
-                            clipBehavior: Clip.antiAlias,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                ListTile(
-                                  // leading: Icon(Icons.arrow_drop_down_circle),
-                                  title: Center(
-                                    child: Text(
-                                      documentSnapshot['name'],
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: 20,
-                                      ),
+            var documentSnapshot = snapshot.data;
+
+            return ListView(
+              children: [
+                Card(
+                  clipBehavior: Clip.antiAlias,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Card(
+                          clipBehavior: Clip.antiAlias,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              ListTile(
+                                // leading: Icon(Icons.arrow_drop_down_circle),
+                                title: Center(
+                                  child: Text(
+                                    documentSnapshot['name'],
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 20,
                                     ),
                                   ),
-                                  // subtitle: Text(
-                                  //   'Secondary Text',
-                                  //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                                  // ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    height: 200,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          documentSnapshot['image']),
-                                    )),
-                                  ),
+                                // subtitle: Text(
+                                //   'Secondary Text',
+                                //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                // ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 200,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image:
+                                        NetworkImage(documentSnapshot['image']),
+                                  )),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Text(
-                                    documentSnapshot['des'],
-                                    style: TextStyle(
-                                        color: Colors.black.withOpacity(0.6)),
-                                  ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 2),
+                                child: ButtonBar(
+                                  alignment: MainAxisAlignment.start,
+                                  children: [
+                                    ElevatedButton.icon(
+                                        icon: const Icon(Icons.food_bank,
+                                            size: 18),
+                                        label: const Text("Order"),
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return addOrder(
+                                                    context, documentSnapshot);
+                                              });
+                                        }),
+                                    ElevatedButton.icon(
+                                      icon: Icon(Icons.price_change, size: 18),
+                                      label: Text(documentSnapshot['price']),
+                                      onPressed: () {},
+                                    ),
+                                  ],
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 2),
-                                  child: ButtonBar(
-                                    alignment: MainAxisAlignment.start,
-                                    children: [
-                                      ElevatedButton.icon(
-                                          icon: const Icon(Icons.food_bank,
-                                              size: 18),
-                                          label: const Text("Order"),
-                                          onPressed: () {
-                                            showModalBottomSheet(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return addOrder(context,
-                                                      documentSnapshot);
-                                                });
-                                          }),
-                                      ElevatedButton.icon(
-                                        icon:
-                                            Icon(Icons.price_change, size: 18),
-                                        label: Text(documentSnapshot['price']),
-                                        onPressed: () {},
-                                      ),
-                                    ],
-                                  ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  documentSnapshot['des'],
+                                  style: TextStyle(
+                                      color: Colors.black.withOpacity(0.6)),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             );
           },
         ));

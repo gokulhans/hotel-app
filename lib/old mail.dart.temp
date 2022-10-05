@@ -94,7 +94,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           // When the User clicks on the button, display a BottomSheet
           showModalBottomSheet(

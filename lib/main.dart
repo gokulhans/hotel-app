@@ -11,6 +11,7 @@ import 'package:educationapp/table.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,59 +37,98 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      routes: {
-        'admin': (ctx) {
-          return const AdminPage();
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        routes: {
+          'admin': (ctx) {
+            return const AdminPage();
+          },
+          'orders': (ctx) {
+            return const Orders();
+          },
+          'menu': (ctx) {
+            return const Menu(title: 'OUT');
+          },
+          'test': (ctx) {
+            return const TabBarDemo();
+          },
+          'alltables': (ctx) {
+            return const AllTables();
+          },
+          'table': (ctx) {
+            return Tablepage(
+              title: 'df',
+            );
+          },
+          'allcats': (ctx) {
+            return const AllCats(
+              title: 'IN',
+            );
+          },
+          'cat': (ctx) {
+            return const Catpage(
+              table: 'snacks',
+              title: 'snacks',
+              type: 'IN',
+            );
+          },
+          'search': (ctx) {
+            return const Searchbar();
+          },
         },
-        'orders': (ctx) {
-          return const Orders();
-        },
-        'menu': (ctx) {
-          return const Menu(title: 'OUT');
-        },
-        'test': (ctx) {
-          return const TabBarDemo();
-        },
-        'alltables': (ctx) {
-          return const AllTables();
-        },
-        'table': (ctx) {
-          return Tablepage(
-            title: 'df',
-          );
-        },
-        'allcats': (ctx) {
-          return const AllCats(
-            title: 'IN',
-          );
-        },
-        'cat': (ctx) {
-          return const Catpage(
-            table: 'snacks',
-            title: 'snacks',
-            type: 'IN',
-          );
-        },
-        'search': (ctx) {
-          return const Searchbar();
-        },
-      },
-      home: DefaultTabController(
+        home: const SplashScreen());
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+        const Duration(seconds: 3),
+        () => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const Home())));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(backgroundColor: Color.fromARGB(255, 43, 42, 40),body: Center(child: Image.asset('logo.jpg')));
+  }
+}
+
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: DefaultTabController(
         length: 2,
         child: Scaffold(
-      drawer: const NavDrawer(),
+          drawer: const NavDrawer(),
           appBar: AppBar(
             bottom: const TabBar(
               tabs: [
-                Tab(icon: Icon(Icons.food_bank ), text: 'IN',),
-                Tab(icon: Icon(Icons.food_bank), text: 'OUT',),
+                Tab(
+                  icon: Icon(Icons.food_bank),
+                  text: 'IN',
+                ),
+                Tab(
+                  icon: Icon(Icons.food_bank),
+                  text: 'OUT',
+                ),
               ],
             ), // TabBar
-            title: const Center(child: Text('NatuRoots')),
+            title: const Text('NatuRoots'),
             centerTitle: true,
             backgroundColor: Colors.green,
           ), // AppBar
@@ -99,7 +139,7 @@ class MyApp extends StatelessWidget {
             ],
           ), // TabBarView
         ), // Scaffold
-      ), // DefaultTabController
+      ), // DefaultTabController,
     );
   }
 }

@@ -12,7 +12,7 @@ class Orders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: FloatingActionButton(
+      // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
       //     // When the User clicks on the button, display a BottomSheet
       //     showModalBottomSheet(
@@ -125,17 +125,12 @@ class Orders extends StatelessWidget {
                                           label: const Text('Edit Count'),
                                         ),
                                         ElevatedButton(
-                                         
-                                          onPressed: () {
-                                            
-                                          },
-                                          child: Text(documentSnapshot['count']),
+                                          onPressed: () {},
+                                          child:
+                                              Text(documentSnapshot['count']),
                                         ),
                                         ElevatedButton(
-                                         
-                                          onPressed: () {
-                                            
-                                          },
+                                          onPressed: () {},
                                           child: Text(documentSnapshot['spec']),
                                         ),
                                       ],
@@ -148,8 +143,8 @@ class Orders extends StatelessWidget {
                             //   'Secondary Text',
                             //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             // ),
-                          ),   
-                          ],
+                          ),
+                        ],
                       ),
                     )
                   ],

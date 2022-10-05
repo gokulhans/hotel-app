@@ -8,7 +8,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 final db = FirebaseFirestore.instance;
 String table = 'undefined';
 
-
 class AllCats extends StatefulWidget {
   const AllCats({Key? key, required this.title}) : super(key: key);
   final String title;
@@ -20,7 +19,7 @@ class _AllCatsState extends State<AllCats> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           // When the User clicks on the button, display a BottomSheet
           showModalBottomSheet(
@@ -32,10 +31,9 @@ class _AllCatsState extends State<AllCats> {
         },
         child: const Icon(Icons.add),
       ),
-      
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget
-        stream: db.collection('category').snapshots(),
+        stream: db.collection('category').orderBy("cat").snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -83,7 +81,6 @@ class _AllCatsState extends State<AllCats> {
   }
 }
 
-
 addNewOrder(BuildContext context) {
   // Added the isUpdate argument to check if our item has been updated
   return Padding(
@@ -112,8 +109,7 @@ addNewOrder(BuildContext context) {
         ),
         TextButton(
             style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(Colors.green),
+              backgroundColor: MaterialStateProperty.all(Colors.green),
             ),
             onPressed: () {
               db.collection('tables').add({'table': table});
