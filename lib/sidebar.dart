@@ -15,7 +15,7 @@ class NavDrawer extends StatelessWidget {
           DrawerHeader(
             child: Center(
               child: Container(
-                child: Image.asset('logo.jpg'),
+                child: Image.asset('assets/logo.png'),
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                
