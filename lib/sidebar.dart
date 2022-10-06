@@ -15,6 +15,8 @@ class NavDrawer extends StatelessWidget {
           DrawerHeader(
             child: Center(
               child: Container(
+                padding: EdgeInsets.zero,
+                color: Color.fromARGB(255, 43, 42, 40),
                 child: Image.asset('assets/logo.png'),
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
