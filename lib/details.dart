@@ -31,7 +31,7 @@ class _DetailsState extends State<Details> {
         ),
         body: StreamBuilder(
           // Reading Items form our Database Using the StreamBuilder widget
-          stream: db.collection('eduapp').doc(widget.id).snapshots(),
+          stream: db.collection('products').doc(widget.id).snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return const Center(

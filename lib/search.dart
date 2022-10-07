@@ -27,10 +27,8 @@ class _SearchbarState extends State<Searchbar> {
           ),
         )),
         body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('eduapp').snapshots(),
+          stream: FirebaseFirestore.instance.collection('products').snapshots(),
           builder: (context, snapshots) {
-
-            
             return (snapshots.connectionState == ConnectionState.waiting)
                 ? Center(
                     child: CircularProgressIndicator(),
@@ -88,7 +86,7 @@ class _SearchbarState extends State<Searchbar> {
                           ),
                         );
                       }
-                      
+
                       return Container();
                     });
           },

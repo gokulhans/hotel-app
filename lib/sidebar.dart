@@ -42,7 +42,7 @@ class NavDrawer extends StatelessWidget {
           //   onTap: () => {Navigator.of(context).pushNamed('support')},
           // ),
           ListTile(
-            leading: const Icon(Icons.info),
+            leading: const Icon(Icons.table_bar),
             title: const Text('All Tables'),
             onTap: () => {Navigator.of(context).pushNamed('alltables')},
           ),
@@ -52,20 +52,25 @@ class NavDrawer extends StatelessWidget {
           //   onTap: () => {Navigator.of(context).pushNamed('allcats')},
           // ),
           ListTile(
-            leading: const Icon(Icons.info),
+            leading: const Icon(Icons.admin_panel_settings_outlined),
             title: const Text('Admin Page'),
             onTap: () => {Navigator.of(context).pushNamed('admin')},
           ),
           ListTile(
-            leading: const Icon(Icons.info),
+            leading: const Icon(Icons.search),
             title: const Text('Search Page'),
             onTap: () => {Navigator.of(context).pushNamed('search')},
           ),
           ListTile(
-            leading: const Icon(Icons.info),
-            title: const Text('Test Page'),
-            onTap: () => {Navigator.of(context).pushNamed('test')},
+            leading: const Icon(Icons.category),
+            title: const Text('All Categories'),
+            onTap: () => {Navigator.of(context).pushNamed('categories')},
           ),
+          // ListTile(
+          //   leading: const Icon(Icons.info),
+          //   title: const Text('Test Page'),
+          //   onTap: () => {Navigator.of(context).pushNamed('test')},
+          // ),
          
         ],
       ),

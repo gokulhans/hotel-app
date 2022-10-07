@@ -199,7 +199,7 @@ showBottomSheet(
                     .update({'count': count});
               } else {
                 db
-                    .collection('eduapp')
+                    .collection('products')
                     .add({'name': value, 'image': image, 'des': des});
               }
               Navigator.pop(context);

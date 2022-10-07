@@ -18,7 +18,7 @@ class _SingleMenuState extends State<SingleMenu> {
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget
         stream: db
-            .collection('eduapp')
+            .collection('products')
             .where("name", isEqualTo: widget.title)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {

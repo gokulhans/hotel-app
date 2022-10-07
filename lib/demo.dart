@@ -34,7 +34,7 @@ class AdminPage extends StatelessWidget {
       ),
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget
-        stream: db.collection('eduapp').snapshots(),
+        stream: db.collection('products').snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -108,7 +108,7 @@ class AdminPage extends StatelessWidget {
                                           onPressed: () {
                                             // Perform some action
                                             db
-                                                .collection('eduapp')
+                                                .collection('products')
                                                 .doc(documentSnapshot.id)
                                                 .delete();
                                           },
@@ -270,7 +270,7 @@ showBottomSheet(
             onPressed: () {
               // Check to see if isUpdate is true then update the value else add the value
               if (isUpdate) {
-                db.collection('eduapp').doc(documentSnapshot?.id).update({
+                db.collection('products').doc(documentSnapshot?.id).update({
                   'name': value,
                   'image': image,
                   'des': des,
@@ -280,7 +280,7 @@ showBottomSheet(
                   'available': available
                 });
               } else {
-                db.collection('eduapp').add({
+                db.collection('products').add({
                   'name': value,
                   'image': image,
                   'des': des,
@@ -448,7 +448,7 @@ editPage(BuildContext context, DocumentSnapshot? documentSnapshot) {
               // Check to see if isUpdate is true then update the value else add the value
               // print({value,image,des,type,category,price,available});
 
-              db.collection('eduapp').doc(documentSnapshot?.id).update({
+              db.collection('products').doc(documentSnapshot?.id).update({
                 'name': value,
                 'image': image,
                 'des': des,

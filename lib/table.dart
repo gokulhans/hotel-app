@@ -66,32 +66,46 @@ class _TablepageState extends State<Tablepage> {
                           ButtonBar(
                             alignment: MainAxisAlignment.start,
                             children: [
-                              ElevatedButton.icon(
-                                icon:
-                                    const Icon(Icons.delete_rounded, size: 18),
-                                label: const Text("Order Ready"),
-                                onPressed: () {},
-                              ),
-                              ElevatedButton.icon(
-                                icon: const Icon(Icons.edit, size: 16),
-                                label: const Text("Done"),
-                                onPressed: () {
-                                  db
-                                      .collection('orders')
-                                      .doc(documentSnapshot.id)
-                                      .delete();
-                                },
-                              ),
-                              ElevatedButton(
-                                onPressed: () {},
-                                child:
-                                    Text("count " + documentSnapshot['count']),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {},
-                                child:
-                                    Text("table " + documentSnapshot['table']),
-                              ),
+                             
+                              Row(
+                                children: [
+                                    ElevatedButton.icon(
+                                    icon: const Icon(Icons.edit, size: 16),
+                                    label: const Text("Done"),
+                                    onPressed: () {
+                                      db
+                                          .collection('orders')
+                                          .doc(documentSnapshot.id)
+                                          .delete();
+                                    },
+                                  ),
+                                  // ElevatedButton.icon(
+                                  //   icon:
+                                  //       const Icon(Icons.delete_rounded, size: 18),
+                                  //   label: const Text("Order Ready"),
+                                  //   onPressed: () {},
+                                  // ),
+                                 
+                                  ElevatedButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                        "count " + documentSnapshot['count']),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                        "table " + documentSnapshot['table']),
+                                  ),
+                                  ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.red)),
+                                    onPressed: () {},
+                                    child: Text(documentSnapshot['spec']),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
                         ],

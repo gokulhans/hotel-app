@@ -15,7 +15,7 @@ class AllTables extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: const Text('All Orders'),
+        title: const Text('All Tables'),
         centerTitle: true,
       ),
       body: StreamBuilder(

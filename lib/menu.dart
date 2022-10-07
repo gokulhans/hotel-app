@@ -36,7 +36,7 @@ class _MenuState extends State<Menu> {
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget
         stream: db
-            .collection('eduapp')
+            .collection('products')
             .where("type", isEqualTo: widget.title)
             .where("available", isEqualTo: "yes")
             .snapshots(),

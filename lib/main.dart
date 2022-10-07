@@ -2,6 +2,7 @@ import 'package:educationapp/admin.dart';
 import 'package:educationapp/allcats.dart';
 import 'package:educationapp/alltables.dart';
 import 'package:educationapp/cat.dart';
+import 'package:educationapp/categories.dart';
 import 'package:educationapp/menu.dart';
 import 'package:educationapp/menucard.dart';
 import 'package:educationapp/orders.dart';
@@ -76,6 +77,9 @@ class MyApp extends StatelessWidget {
           },
           'search': (ctx) {
             return const Searchbar();
+          },
+          'categories': (ctx) {
+            return const AllCategories();
           },
         },
         home: const SplashScreen());

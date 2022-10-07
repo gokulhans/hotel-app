@@ -34,6 +34,7 @@ class _AllCatsState extends State<AllCats> {
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget
         stream: db.collection('category').orderBy("cat").snapshots(),
+        //where("type",isEqualTo: widget.title).orderBy("cat")
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -41,39 +42,42 @@ class _AllCatsState extends State<AllCats> {
             );
           }
 
-          return ListView.builder(
-            itemCount: snapshot.data?.docs.length,
-            itemBuilder: (context, int index) {
-              DocumentSnapshot documentSnapshot = snapshot.data.docs[index];
-              return ListTile(
-                title: Column(
-                  children: [
-                    Card(
-                      clipBehavior: Clip.antiAlias,
-                      child: Column(
-                        children: [
-                          ListTile(
-                            onTap: () => {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Catpage(
-                                      title: documentSnapshot['cat'],
-                                      table: table,
-                                      type: widget.title),
-                                ),
-                              )
-                            },
-                            title: Text(documentSnapshot['cat']),
-                            // title:Text(documentSnapshot['table']) ,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView.builder(
+              itemCount: snapshot.data?.docs.length,
+              itemBuilder: (context, int index) {
+                DocumentSnapshot documentSnapshot = snapshot.data.docs[index];
+                return ListTile(
+                  title: Column(
+                    children: [
+                      Card(
+                        clipBehavior: Clip.antiAlias,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              onTap: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Catpage(
+                                        title: documentSnapshot['cat'],
+                                        table: table,
+                                        type: widget.title),
+                                  ),
+                                )
+                              },
+                              title: Text(documentSnapshot['cat']),
+                              // title:Text(documentSnapshot['table']) ,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
           );
         },
       ),
