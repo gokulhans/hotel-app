@@ -87,18 +87,18 @@ class _DetailsState extends State<Details> {
                                 child: ButtonBar(
                                   alignment: MainAxisAlignment.start,
                                   children: [
-                                    ElevatedButton.icon(
-                                        icon: const Icon(Icons.food_bank,
-                                            size: 18),
-                                        label: const Text("Order"),
-                                        onPressed: () {
-                                          showModalBottomSheet(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return addOrder(
-                                                    context, documentSnapshot);
-                                              });
-                                        }),
+                                    // ElevatedButton.icon(
+                                    //     icon: const Icon(Icons.food_bank,
+                                    //         size: 18),
+                                    //     label: const Text("Order"),
+                                    //     onPressed: () {
+                                    //       showModalBottomSheet(
+                                    //           context: context,
+                                    //           builder: (BuildContext context) {
+                                    //             return addOrder(
+                                    //                 context, documentSnapshot);
+                                    //           });
+                                    //     }),
                                     ElevatedButton.icon(
                                       icon: Icon(Icons.price_change, size: 18),
                                       label: Text(documentSnapshot['price']),

@@ -13,7 +13,11 @@ String? price; // use num data type
 String? available;
 
 class AllCategories extends StatelessWidget {
+
+  
+
   const AllCategories({Key? key}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,11 +113,12 @@ class AllCategories extends StatelessWidget {
   }
 }
 
+
 addCategory(
     BuildContext context, bool isUpdate, DocumentSnapshot? documentSnapshot) {
   // Added the isUpdate argument to check if our item has been updated
   return Padding(
-    padding: const EdgeInsets.only(top: 20),
+    padding: const EdgeInsets.only(top: 100),
     child: Column(
       children: [
         SizedBox(

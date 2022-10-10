@@ -29,7 +29,7 @@ class _AllCatsState extends State<AllCats> {
             },
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.table_bar),
       ),
       body: StreamBuilder(
         // Reading Items form our Database Using the StreamBuilder widget

@@ -18,7 +18,14 @@ class _TablepageState extends State<Tablepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          var data = db
+              .collection('orders')
+              .where("table", isEqualTo: widget.title)
+              .get();
+              
+          print(data);
+        },
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
@@ -66,10 +73,9 @@ class _TablepageState extends State<Tablepage> {
                           ButtonBar(
                             alignment: MainAxisAlignment.start,
                             children: [
-                             
                               Row(
                                 children: [
-                                    ElevatedButton.icon(
+                                  ElevatedButton.icon(
                                     icon: const Icon(Icons.edit, size: 16),
                                     label: const Text("Done"),
                                     onPressed: () {
@@ -85,27 +91,29 @@ class _TablepageState extends State<Tablepage> {
                                   //   label: const Text("Order Ready"),
                                   //   onPressed: () {},
                                   // ),
-                                 
-                                  ElevatedButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                        "count " + documentSnapshot['count']),
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ElevatedButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                          "count " + documentSnapshot['count']),
+                                    ),
                                   ),
                                   ElevatedButton(
                                     onPressed: () {},
                                     child: Text(
                                         "table " + documentSnapshot['table']),
                                   ),
-                                  ElevatedButton(
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.red)),
-                                    onPressed: () {},
-                                    child: Text(documentSnapshot['spec']),
-                                  ),
                                 ],
-                              )
+                              ),
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.red)),
+                                onPressed: () {},
+                                child: Text(documentSnapshot['spec']),
+                              ),
                             ],
                           ),
                         ],

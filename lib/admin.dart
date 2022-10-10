@@ -25,6 +25,7 @@ class AdminPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: FloatingActionButton(
+                  heroTag: "btn1",
                   onPressed: () {
                     // When the User clicks on the button, display a BottomSheet
                     showModalBottomSheet(
@@ -40,6 +41,7 @@ class AdminPage extends StatelessWidget {
               ),
               FloatingActionButton(
                 backgroundColor: Colors.red,
+                heroTag: "btn2", //unique id for floatadction btn
                 onPressed: () {
                   // When the User clicks on the button, display a BottomSheet
                   showModalBottomSheet(
@@ -141,73 +143,78 @@ class AdminPage extends StatelessWidget {
 addCategory(
     BuildContext context, bool isUpdate, DocumentSnapshot? documentSnapshot) {
   // Added the isUpdate argument to check if our item has been updated
-  return Padding(
-    padding: const EdgeInsets.only(top: 20),
-    child: ListView(
-      children: [
-        ListTile(
-          // width: MediaQuery.of(context).size.width * 0.9,
-          title: Column(
-            children: [
-              // TextField(
-              //   decoration: InputDecoration(
-              //     border: const OutlineInputBorder(),
-              //     // Used a ternary operator to check if isUpdate is true then display
-              //     // Update name.
-              //     labelText: isUpdate ? 'Update type' : 'Add type',
-              //     hintText: 'Enter An Item',
-              //   ),
-              //   onChanged: (String _val) {
-              //     // Storing the value of the text entered in the variable value.
-              //     type = _val;
-              //   },
-              // ),
-              TextField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  // Used a ternary operator to check if isUpdate is true then display
-                  // Update name.
-                  labelText: isUpdate ? 'Update category' : 'Add category',
-                  hintText: 'Enter category',
-                ),
-                onChanged: (String _val) {
-                  // Storing the value of the text entered in the variable value.
-                  category = _val;
-                },
+  return SafeArea(
+    child: Center(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 100),
+        child: ListView(
+          children: [
+            ListTile(
+              // width: MediaQuery.of(context).size.width * 0.9,
+              title: Column(
+                children: [
+                  // TextField(
+                  //   decoration: InputDecoration(
+                  //     border: const OutlineInputBorder(),
+                  //     // Used a ternary operator to check if isUpdate is true then display
+                  //     // Update name.
+                  //     labelText: isUpdate ? 'Update type' : 'Add type',
+                  //     hintText: 'Enter An Item',
+                  //   ),
+                  //   onChanged: (String _val) {
+                  //     // Storing the value of the text entered in the variable value.
+                  //     type = _val;
+                  //   },
+                  // ),
+                  TextField(
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      // Used a ternary operator to check if isUpdate is true then display
+                      // Update name.
+                      labelText: isUpdate ? 'Update category' : 'Add category',
+                      hintText: 'Enter category',
+                    ),
+                    onChanged: (String _val) {
+                      // Storing the value of the text entered in the variable value.
+                      category = _val;
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        TextButton(
-            style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(Colors.lightBlueAccent),
             ),
-            onPressed: () {
-              // Check to see if isUpdate is true then update the value else add the value
-              if (isUpdate) {
-                db.collection('category').doc(documentSnapshot?.id).update({
-                  'cat': category,
-                  // 'type': type,
-                });
-              } else {
-                db.collection('category').add({
-                  'cat': category,
-                  // 'type': type,
-                });
-              }
-              Navigator.pop(context);
-            },
-            child: isUpdate
-                ? const Text(
-                    'UPDATE',
-                    style: TextStyle(color: Colors.white),
-                  )
-                : const Text('ADD', style: TextStyle(color: Colors.white))),
-      ],
+            TextButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.lightBlueAccent),
+                ),
+                onPressed: () {
+                  // Check to see if isUpdate is true then update the value else add the value
+                  if (isUpdate) {
+                    db.collection('category').doc(documentSnapshot?.id).update({
+                      'cat': category,
+                      // 'type': type,
+                    });
+                  } else {
+                    db.collection('category').add({
+                      'cat': category,
+                      // 'type': type,
+                    });
+                  }
+                  Navigator.pop(context);
+                },
+                child: isUpdate
+                    ? const Text(
+                        'UPDATE',
+                        style: TextStyle(color: Colors.white),
+                      )
+                    : const Text('ADD', style: TextStyle(color: Colors.white))),
+          ],
+        ),
+      ),
     ),
   );
 }
+
 
 showBottomSheet(
     BuildContext context, bool isUpdate, DocumentSnapshot? documentSnapshot) {

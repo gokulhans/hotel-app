@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -133,6 +134,15 @@ class Home extends StatelessWidget {
         child: Scaffold(
           drawer: const NavDrawer(),
           appBar: AppBar(
+            systemOverlayStyle: SystemUiOverlayStyle(
+              // Status bar color
+              statusBarColor: Colors.green,
+
+              // Status bar brightness (optional)
+              statusBarIconBrightness:
+                  Brightness.light, // For Android (dark icons)
+              statusBarBrightness: Brightness.light, // For iOS (dark icons)
+            ),
             bottom: const TabBar(
               tabs: [
                 Tab(
